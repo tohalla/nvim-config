@@ -72,53 +72,43 @@ call plug#begin()
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
-Plug 'tpope/vim-fugitive'
+Plug 'godlygeek/tabular'
 
-"command line coloring
+" UI
 Plug 'itchyny/lightline.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi'
+Plug 'Shougo/echodoc.vim'
 
+" Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
+Plug 'rhysd/vim-grammarous'
+Plug 'w0rp/ale'
 
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
-
-Plug 'tpope/vim-surround'
-
+" Snippets
 Plug 'SirVer/ultisnips'
-
 Plug 'honza/vim-snippets'
-
 Plug 'mattn/emmet-vim'
 
-Plug 'w0rp/ale' "linting
-
+" GIT
 Plug 'airblade/vim-gitgutter'
-
-Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
 
 Plug 'tomtom/tcomment_vim'
-
-Plug 'rhysd/vim-grammarous'
-
-Plug 'zchee/deoplete-jedi'
-
-Plug 'junegunn/goyo.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-eunuch'
 
 " Colorschemes
 Plug 'morhetz/gruvbox'
 Plug 'reedes/vim-colors-pencil'
 
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-Plug 'godlygeek/tabular'
-
+" Language support
 Plug 'plasticboy/vim-markdown'
-
-Plug 'tpope/vim-eunuch'
-
-Plug 'nathanaelkane/vim-indent-guides'
-
-Plug 'Shougo/echodoc.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'derekwyatt/vim-scala'
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 let g:lightline={
