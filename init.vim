@@ -11,20 +11,26 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+inoremap <esc> <nop>
 
 inoremap ⁱ <esc>i
 inoremap ² <esc>gja
 inoremap ³ <esc>gka
 inoremap ⁴ <esc>la
 
+" Window mappings
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+noremap <leader>p <C-w><C-w>
+noremap <leader>` :split<cr>
+noremap <leader>~ :vsplit<cr>
+noremap <leader>w :wn<cr>
 
 noremap <leader>o :only<cr>
 
-inoremap <esc> <nop>
+noremap <esc> :bd<cr>
 inoremap jk <Esc>
 
 inoremap <F5> <Esc><F5>
@@ -35,11 +41,12 @@ nnoremap <space> /
 nnoremap ä $
 nnoremap ö ^
 
-noremap <C-n> :NERDTreeToggle<CR>
-noremap <C-f> :ALEFix<CR>
-noremap § :Buffer<CR>
-noremap <leader>§ :GitFiles<CR>
-noremap ¶ :Snippets<CR>
+noremap <C-n> :NERDTreeToggle<cr>
+noremap <C-f> :ALEFix<cr>
+noremap § :Buffer<cr>
+noremap <leader>§ :Files<cr>
+noremap <leader><space> :BTags<cr>
+noremap ° :Ag<cr>
 
 " Keep search results at the center of screen
 nnoremap n nzz
@@ -53,7 +60,7 @@ nnoremap <leader>d "_d
 
 noremap <silent> <leader><cr> :noh<cr>
 
-let g:UltiSnipsExpandTrigger='<c-v>'
+let g:UltiSnipsExpandTrigger='<leader><tab>'
 let g:UltiSnipsJumpForwardTrigger='<c-b>'
 let g:UltiSnipsJumpBackwardTrigger='<c-z>'
 inoremap <silent><expr> <TAB>
@@ -71,16 +78,21 @@ endfunction"}}}
 call plug#begin()
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'godlygeek/tabular'
+Plug 'justinmk/vim-sneak'
 
 " UI
 Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Shougo/echodoc.vim'
+
+" autocompletion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
-Plug 'Shougo/echodoc.vim'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -104,11 +116,15 @@ Plug 'tpope/vim-eunuch'
 Plug 'morhetz/gruvbox'
 Plug 'reedes/vim-colors-pencil'
 
+Plug 'junegunn/goyo.vim'
+
 " Language support
 Plug 'plasticboy/vim-markdown'
 Plug 'derekwyatt/vim-scala'
+Plug 'rust-lang/rust.vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'lervag/vimtex'
 call plug#end()
 
 let g:lightline={
@@ -138,6 +154,8 @@ let g:ale_set_highlights=0
 
 let g:pymode_python='python3'
 
+let g:rust_clip_command = 'pbcopy'
+
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 
@@ -148,6 +166,10 @@ augroup END
 augroup filetype_python
   autocmd!
   autocmd FileType python map <buffer> <F5> :w <cr>:exec '!python' shellescape(@%, 1)<cr>
+augroup END
+augroup filetype_go
+  autocmd!
+  autocmd FileType go map <buffer> <F5> :w <cr>:exec '!go run' shellescape(@%, 1)<cr>
 augroup END
 
 function! s:goyo_enter()
@@ -184,6 +206,8 @@ set statusline+=%*
 filetype plugin indent on
 syntax enable
 
+au FileType gitcommit,gitrebase let g:gutentags_enabled=0
+
 set background=dark
 
 set numberwidth=1
@@ -216,6 +240,7 @@ set novisualbell
 set list
 
 let g:vim_markdown_math=1
+let g:latex_viewer='mupdf'
 
 set diffopt+=vertical
 
