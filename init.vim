@@ -1,3 +1,4 @@
+scriptencoding utf-8
 let mapleader='å'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -51,7 +52,7 @@ nnoremap <space> /
 nnoremap ä $
 nnoremap ö ^
 
-nnoremap <leader>t :TagbarToggle<CR>
+nnoremap TT :TagbarToggle<CR>
 
 noremap <C-n> :NERDTreeToggle<cr>
 
@@ -62,7 +63,11 @@ noremap <C-f> :ALEFix<cr>
 noremap § :Buffer<cr>
 noremap <leader>§ :Files<cr>
 noremap <leader><space> :BTags<cr>
-noremap ° :Ag<cr>
+noremap <C-Space> :Ag<cr>
+
+" GIT
+nnoremap <leader>za :GitGutterFold<cr>
+nnoremap <leader>c :!Git commit -m ""<left>
 
 " Keep search results at the center of screen
 nnoremap n nzz
@@ -137,7 +142,11 @@ Plug 'junegunn/goyo.vim'
 
 " Language support
 Plug 'plasticboy/vim-markdown'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'ternjs/tern_for_vim'
 Plug 'derekwyatt/vim-scala'
+Plug 'euclio/vim-markdown-composer'
 Plug 'rust-lang/rust.vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -174,7 +183,7 @@ let g:lightline={
 \ }
 
 let g:ale_linters={
-\ 'python': ['flake8', 'pylint'] ,
+\ 'python': ['flake8', 'pylint'],
 \ 'go': ['golint', 'gofmt']
 \ }
 let g:ale_fixers={
@@ -192,50 +201,38 @@ let g:ale_sign_error='>'
 let g:ale_sign_warning='.'
 let g:ale_set_highlights=0
 
+" emmet
+let g:user_emmet_leader_key='å'
+
+" js
+let g:tern_map_keys=1
+let g:tern_show_argument_hints='on_hold'
+
 " vim-go
-let g:go_fmt_command = 'goimports'
-let g:go_autodetect_gopath = 1
-let g:go_list_type = 'quickfix'
-let g:go_term_mode = 'new'
+let g:go_fmt_command='goimports'
+let g:go_autodetect_gopath=1
+let g:go_metalinter_autosave=1
+let g:go_metalinter_autosave_enabled=['vet', 'golint']
+let g:go_list_type='quickfix'
+let g:go_term_mode='new'
+let g:go_snippet_case_type='camelcase'
+let g:go_gocode_unimported_packages = 1
 
 let g:pymode_python='python3'
 
-let g:rust_clip_command = 'pbcopy'
-
-augroup general
-  autocmd!
-  autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
-augroup END
+let g:rust_clip_command='pbcopy'
 
 augroup filetype_python
   autocmd!
-  autocmd FileType python map <buffer> <F5> :w <cr>:exec '!python' shellescape(@%, 1)<cr>
+  autocmd FileType python noremap <buffer> <F5> :w <cr>:exec '!python' shellescape(@%, 1)<cr>
 augroup END
 
 augroup filetype_go
   autocmd!
-  autocmd FileType go map <buffer> <F5> :w<cr><Plug>(go-run)
-  autocmd FileType go map <buffer> <F6> :w<cr><Plug>(go-test)
-  nnoremap <leader>. :vs<cr>:exe "GoDef"<cr>
-augroup END
-
-function! s:goyo_enter()
-    colorscheme pencil
-endfunction
-
-function! s:goyo_leave()
-    colorscheme gruvbox
-endfunction
-
-augroup goyo
-  autocmd!
-  autocmd User GoyoEnter nested call <SID>goyo_enter()
-  autocmd User GoyoLeave nested call <SID>goyo_leave()
-augroup END
-
-augroup goyo
-  autocmd!
-  autocmd BufReadPost fugitive://* set bufhidden=delete<Paste>
+  autocmd FileType go noremap <buffer> <F5> :w<cr><Plug>(go-run)
+  autocmd FileType go noremap <leader><space> :GoDecls<cr>
+  autocmd FileType go noremap <leader>c :GoCoverageToggle<cr>
+  autocmd FileType go nnoremap tt :GoTest<cr>
 augroup END
 
 set runtimepath+=~/.config/nvim/plugged/deoplete.nvim
@@ -246,7 +243,7 @@ let g:indent_guides_color_change_percent=1
 let g:indent_guides_guide_size=1
 let g:indent_guides_enable_on_vim_startup=1
 
-let g:indent_guides_auto_colors = 0
+let g:indent_guides_auto_colors=0
 augroup guides
   autocmd!
   au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
@@ -262,8 +259,10 @@ syntax enable
 
 augroup git
   autocmd!
-  au FileType gitcommit,gitrebase let g:gutentags_enabled=0
+  au FileType gitcommit,gitrebase,vim let g:gutentags_enabled=0
 augroup END
+
+set updatetime=100
 
 set background=dark
 
@@ -272,6 +271,7 @@ set ruler
 set colorcolumn=80
 set noshowmode "lightline
 set ignorecase
+set smartcase
 set number
 set relativenumber
 
@@ -283,8 +283,12 @@ set autoread
 set hidden
 set backspace=indent,eol,start
 set showmatch
+
+"search
 set hlsearch
 set incsearch
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
 set scrolloff=1
 
 set history=1000
