@@ -54,7 +54,7 @@ nnoremap ö ^
 
 nnoremap TT :TagbarToggle<CR>
 
-noremap <C-n> :NERDTreeToggle<cr>
+nnoremap <C-n> :NERDTreeToggle<cr>
 
 nnoremap <leader>0 :ALENext<cr>
 nnoremap <leader>9 :ALEPrevious<cr>
@@ -105,7 +105,7 @@ Plug 'godlygeek/tabular'
 Plug 'justinmk/vim-sneak'
 
 " UI
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/echodoc.vim'
@@ -151,6 +151,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'lervag/vimtex'
+Plug 'OmniSharp/omnisharp-vim'
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -171,24 +172,22 @@ set wrap "Wrap lines
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => linters, ui
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:lightline={
-\ 'colorscheme': 'gruvbox',
-\ 'active': {
-\   'left': [ [ 'mode', 'paste' ],
-\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-\ },
-\ 'component_function': {
-\   'gitbranch': 'fugitive#head'
-\ },
-\ }
+let g:airline#extensions#tabline#left_sep=' '
+let g:airline#extensions#tabline#left_alt_sep='|'
+let g:airline#extensions#tabline#enabled=1
 
 let g:ale_linters={
 \ 'python': ['flake8', 'pylint'],
-\ 'go': ['golint', 'gofmt']
+\ 'go': ['golint', 'gofmt'],
+\ 'javascript': ['eslint'],
+\ 'markdown': ['mdl'],
+\ 'cs': ['OmniSharp'],
 \ }
 let g:ale_fixers={
 \ 'python': ['autopep8', 'yapf'],
-\ 'go': ['gofmt', 'goimports']
+\ 'go': ['gofmt', 'goimports'],
+\ 'javascript': ['eslint'],
+\ 'markdown': ['prettier'],
 \ }
 
 let g:gruvbox_contrast_dark='hard'
@@ -210,13 +209,13 @@ let g:tern_show_argument_hints='on_hold'
 
 " vim-go
 let g:go_fmt_command='goimports'
-let g:go_autodetect_gopath=1
 let g:go_metalinter_autosave=1
 let g:go_metalinter_autosave_enabled=['vet', 'golint']
 let g:go_list_type='quickfix'
 let g:go_term_mode='new'
 let g:go_snippet_case_type='camelcase'
-let g:go_gocode_unimported_packages = 1
+let g:go_gocode_unimported_packages=1
+let g:go_auto_type_info=1
 
 let g:pymode_python='python3'
 
@@ -240,14 +239,14 @@ let g:deoplete#enable_at_startup=1
 let g:deoplete#max_list=15
 
 let g:indent_guides_color_change_percent=1
-let g:indent_guides_guide_size=1
+let g:indent_guides_guide_size=0
 let g:indent_guides_enable_on_vim_startup=1
 
 let g:indent_guides_auto_colors=0
 augroup guides
   autocmd!
-  au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
-  au VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=234
+  au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=234
+  au VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=235
 augroup END
 
 set statusline+=%#warningmsg#
@@ -260,6 +259,7 @@ syntax enable
 augroup git
   autocmd!
   au FileType gitcommit,gitrebase,vim let g:gutentags_enabled=0
+  au Colorscheme * :hi GitGutterAdd ctermfg=70 ctermbg=237
 augroup END
 
 set updatetime=100
@@ -301,6 +301,8 @@ set novisualbell
 set list
 set listchars=tab:\ \ ,extends:›,precedes:‹,nbsp:·,trail:·
 
+let g:markdown_composer_autostart=0
+let g:vim_markdown_new_list_item_indent=2
 let g:vim_markdown_math=1
 let g:latex_viewer='mupdf'
 
