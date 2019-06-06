@@ -346,6 +346,7 @@ set listchars=tab:\ \ ,extends:›,precedes:‹,nbsp:·,trail:·
 let g:markdown_composer_autostart=0
 let g:vim_markdown_new_list_item_indent=2
 let g:vim_markdown_math=1
+let g:vim_markdown_folding_level = 3
 let g:latex_viewer='mupdf'
 
 set diffopt+=vertical
