@@ -7,10 +7,6 @@ let maplocalleader='ä'
 " => Keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 inoremap   <space>
-noremap <up> <nop>
-noremap <down> <nop>
-noremap <left> <nop>
-noremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
@@ -29,12 +25,16 @@ inoremap ³ <esc>gka
 inoremap ⁴ <esc>la
 
 " Window mappings
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+noremap <up> <C-w><up>
+noremap <down> <C-w><down>
+noremap <left> <C-w><left>
+noremap <right> <C-w><rigHt>
+noremap <M-right> <C-w>>
+noremap <M-left> <C-w><
+noremap <M-up> <C-w>+
+noremap <M-down> <C-w>-
 noremap <leader>p <C-w><C-w>
-noremap <leader><BS> <C-w>q
+noremap <BS> <C-w>q
 noremap <leader><Leader> :bd<cr>
 noremap <leader>` :split<cr>
 noremap <leader>~ :vsplit<cr>
@@ -189,22 +189,17 @@ Plug 'tpope/vim-eunuch'
 " Colorschemes
 Plug 'tomasr/molokai'
 
-Plug 'junegunn/goyo.vim'
-
 " Language support
-Plug 'fisadev/vim-isort'
-Plug 'jalvesaq/Nvim-R'
 Plug 'plasticboy/vim-markdown'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'derekwyatt/vim-scala'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-Plug 'rust-lang/rust.vim'
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 Plug 'lervag/vimtex'
-Plug 'OmniSharp/omnisharp-vim'
+
+Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
+
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -230,12 +225,19 @@ set completeopt+=preview
 let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep='|'
 let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#formatter='unique_tail_improved'
+let g:airline_theme='distinguished'
+
+autocmd ColorScheme * hi clear SignColumn
+autocmd ColorScheme * hi GitGutterAdd guifg=green
+autocmd ColorScheme * hi GitGutterChange guifg=darkyellow
+autocmd ColorScheme * hi GitGutterDelete guifg=red
+autocmd ColorScheme * hi GitGutterChangeDelete guifg=darkyellow
 
 set background=dark
 set termguicolors
 set syntax
 colorscheme molokai
-let g:airline_theme='molokai'
 
 " close loclist when buffer is closed
 augroup CloseLoclistWindowGroup
@@ -243,37 +245,11 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
-" R
-let R_r_console_height=10
-let R_rconsole_width=0
-let R_assign_map = ''
-let R_nvimpager='horizontal'
-
-" vim-go
-let g:go_fmt_command='goimports'
-let g:go_metalinter_autosave=1
-let g:go_metalinter_autosave_enabled=['vet', 'golint']
-let g:go_list_type='quickfix'
-let g:go_term_mode='new'
-let g:go_snippet_case_type='camelcase'
-let g:go_gocode_unimported_packages=1
-let g:go_auto_type_info=1
-
 let g:pymode_python='python3'
-
-let g:rust_clip_command='pbcopy'
 
 augroup filetype_python
   autocmd!
   autocmd FileType python noremap <buffer> <F5> :w <cr>:exec '!python' shellescape(@%, 1)<cr>
-augroup END
-
-augroup filetype_go
-  autocmd!
-  autocmd FileType go noremap <buffer> <F5> :w<cr><Plug>(go-run)
-  autocmd FileType go noremap <leader><space> :GoDecls<cr>
-  autocmd FileType go noremap <leader>c :GoCoverageToggle<cr>
-  autocmd FileType go nnoremap tt :GoTest<cr>
 augroup END
 
 let g:indent_guides_color_change_percent=1
@@ -310,7 +286,7 @@ set conceallevel=0
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 
-set updatetime=300
+set updatetime=100
 
 set background=dark
 
