@@ -1,4 +1,5 @@
 scriptencoding utf-8
+
 let mapleader='å'
 let maplocalleader='ä'
 
@@ -42,7 +43,7 @@ noremap <leader>ö :only<cr>
 
 nnoremap <leader>o :bn<cr>
 nnoremap <leader>i :bp<cr>
-inoremap jk <Esc>
+inoremap jk <ESC>
 
 inoremap <F5> <Esc><F5>
 inoremap <F6> <Esc><F6>
@@ -57,18 +58,16 @@ nnoremap TT :TagbarToggle<CR>
 
 nnoremap <C-n> :NERDTreeToggle<cr>
 
-nnoremap <leader>0 :ALENext<cr>
-nnoremap <leader>9 :ALEPrevious<cr>
-noremap <C-f> :ALEFix<cr>
-
-noremap § :Buffer<cr>
-noremap <leader>§ :Files<cr>
-noremap <leader><space> :BTags<cr>
-noremap <C-Space> :Ag<cr>
+nnoremap § :Buffer<cr>
+nnoremap <leader>§ :Files<cr>
+nnoremap <leader><space> :BTags<cr>
+nnoremap <C-Space> :Ag<cr>
 
 " GIT
 nnoremap <leader>za :GitGutterFold<cr>
 nnoremap <leader>c :!Git commit -m ""<left>
+nmap ä <Plug>(GitGutterNextHunk)
+nmap Ä <Plug>(GitGutterPrevHunk)
 
 " Keep search results at the center of screen
 nnoremap n nzz
@@ -78,28 +77,75 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-nnoremap <leader>d "_d
 nnoremap <leader>x "_x
 
 noremap <silent> <leader><cr> :noh<cr>
 
 nnoremap <leader>u :UndotreeToggle<cr>
 
-let g:UltiSnipsExpandTrigger='<leader><tab>'
-let g:UltiSnipsJumpForwardTrigger='<leader>w'
-let g:UltiSnipsJumpBackwardTrigger='<leader>q'
-inoremap <silent><expr> <S-TAB>
-  \ pumvisible() ? "\<C-p>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ deoplete#mappings#manual_complete()
+""coc
+nmap <silent> <leader>9 <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>0 <Plug>(coc-diagnostic-next)
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> <leader>R <Plug>(coc-references)
+
+nmap <silent> <leader>d <Plug>(coc-range-select)
+xmap <silent> <leader>d <Plug>(coc-range-select)
+
+" Remap for rename current word
+nmap <leader>r <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)
+
+" Fix autofix problem of current line
+nmap <leader>qf <Plug>(coc-fix-current)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+imap <silent><leader><TAB> <Plug>(coc-snippets-expand)
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ deoplete#mappings#manual_complete()
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <silent><expr> <c-space> coc#refresh()
+
 function! s:check_back_space() abort "{{{
   let col=col('.') - 1
   return !col || getline('.')[col - 1]  =~? '\s'
 endfunction"}}}
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Show all diagnostics
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+
+command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
@@ -122,19 +168,12 @@ Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 
 " autocompletion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'honza/vim-snippets'
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rhysd/vim-grammarous'
-Plug 'w0rp/ale'
-
-" Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'mattn/emmet-vim'
 
 " GIT
 Plug 'airblade/vim-gitgutter'
@@ -160,7 +199,7 @@ Plug 'quramy/tsuquyomi'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'ternjs/tern_for_vim'
 Plug 'derekwyatt/vim-scala'
-Plug 'euclio/vim-markdown-composer'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'rust-lang/rust.vim'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -193,35 +232,9 @@ set completeopt-=preview
 let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep='|'
 let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#ale#enabled = 1
-
-let g:ale_linters={
-\ 'python': ['flake8', 'pylint'],
-\ 'go': ['golint', 'gofmt'],
-\ 'javascript': ['eslint'],
-\ 'markdown': ['mdl'],
-\ 'cs': ['OmniSharp'],
-\ }
-let g:ale_fixers={
-\ 'python': ['autopep8', 'yapf'],
-\ 'go': ['gofmt', 'goimports'],
-\ 'javascript': ['eslint'],
-\ 'markdown': ['prettier'],
-\ }
 
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
-
-let g:ale_enabled=1
-let g:ale_lint_on_text_changed='never'
-let g:ale_set_loclist = 0
-let g:ale_open_list = 0
-let g:ale_set_quickfix = 0
-let g:ale_cursor_detail = 0
-let g:ale_sign_error = '>'
-let g:ale_sign_warning = '.'
-let g:ale_set_highlights = 0
-let g:ale_list_window_size = 0
 
 " close loclist when buffer is closed
 augroup CloseLoclistWindowGroup
@@ -272,17 +285,14 @@ augroup END
 let g:tsuquyomi_auto_open = 1
 augroup filetype_typescript
   autocmd!
-  autocmd FileType typescript noremap <buffer> <Leader>d :TsuDefinition<CR>
+  autocmd FileType typescript noremap <buffer> gd :TsuDefinition<CR>
   autocmd FileType typescript TsuStartServer
 augroup END
-
-set runtimepath+=~/.config/nvim/plugged/deoplete.nvim
-let g:deoplete#enable_at_startup=1
-let g:deoplete#max_list=15
 
 let g:indent_guides_color_change_percent=1
 let g:indent_guides_guide_size=0
 let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_default_mapping=0
 
 let g:indent_guides_auto_colors=0
 augroup guides
@@ -291,6 +301,7 @@ augroup guides
   au VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=235
 augroup END
 
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -301,8 +312,18 @@ syntax enable
 augroup git
   autocmd!
   au FileType gitcommit,gitrebase,vim let g:gutentags_enabled=0
-  au Colorscheme * :hi GitGutterAdd ctermfg=70 ctermbg=237
+  au Colorscheme * :hi Git2Add ctermfg=70 ctermbg=237
 augroup END
+
+au CursorHold,CursorHoldI * checktime
+
+" always show signcolumns
+set signcolumn=yes
+
+set conceallevel=0
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 
 set updatetime=100
 
@@ -316,6 +337,8 @@ set ignorecase
 set smartcase
 set number
 set relativenumber
+
+set nopaste
 
 set nobackup
 set nowritebackup
@@ -343,11 +366,11 @@ set novisualbell
 set list
 set listchars=tab:\ \ ,extends:›,precedes:‹,nbsp:·,trail:·
 
-let g:markdown_composer_autostart=0
 let g:vim_markdown_new_list_item_indent=2
 let g:vim_markdown_math=1
-let g:vim_markdown_folding_level = 3
+let g:vim_markdown_folding_disabled = 1
 let g:latex_viewer='mupdf'
+set nofoldenable
 
 set diffopt+=vertical
 
