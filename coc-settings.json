@@ -1,8 +1,9 @@
 {
   "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 20,
+  "suggest.maxCompleteItemCount": 10,
   "coc.preferences.formatOnSaveFiletypes": [],
   "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx"],
+  "signature.target": ["float", "echo"],
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",

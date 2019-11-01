@@ -120,6 +120,10 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 inoremap <silent><expr> <c-space> coc#refresh()
 
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+  "coc.preferences.triggerSignatureHelp": true,
 function! s:check_back_space() abort "{{{
   let col=col('.') - 1
   return !col || getline('.')[col - 1]  =~? '\s'
@@ -157,15 +161,14 @@ Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'godlygeek/tabular'
 Plug 'justinmk/vim-sneak'
+Plug 'mbbill/undotree'
 
 " UI
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'Shougo/echodoc.vim'
 Plug 'majutsushi/tagbar'
-
-Plug 'mbbill/undotree'
 
 " autocompletion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -184,8 +187,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 
 " Colorschemes
-Plug 'morhetz/gruvbox'
-Plug 'reedes/vim-colors-pencil'
+Plug 'tomasr/molokai'
 
 Plug 'junegunn/goyo.vim'
 
@@ -195,9 +197,7 @@ Plug 'jalvesaq/Nvim-R'
 Plug 'plasticboy/vim-markdown'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
-Plug 'quramy/tsuquyomi'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'ternjs/tern_for_vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'rust-lang/rust.vim'
@@ -225,29 +225,23 @@ set wrap "Wrap lines
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => linters, ui
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:echodoc#enable_at_startup=1
-
-set completeopt-=preview
+set completeopt+=preview
 
 let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep='|'
 let g:airline#extensions#tabline#enabled=1
 
-let g:gruvbox_contrast_dark='hard'
-colorscheme gruvbox
+set background=dark
+set termguicolors
+set syntax
+colorscheme molokai
+let g:airline_theme='molokai'
 
 " close loclist when buffer is closed
 augroup CloseLoclistWindowGroup
   autocmd!
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
-
-" emmet
-let g:user_emmet_leader_key='ä'
-
-" js
-let g:tern_map_keys=1
-let g:tern_show_argument_hints='on_hold'
 
 " R
 let R_r_console_height=10
@@ -282,18 +276,10 @@ augroup filetype_go
   autocmd FileType go nnoremap tt :GoTest<cr>
 augroup END
 
-let g:tsuquyomi_auto_open = 1
-augroup filetype_typescript
-  autocmd!
-  autocmd FileType typescript noremap <buffer> gd :TsuDefinition<CR>
-  autocmd FileType typescript TsuStartServer
-augroup END
-
 let g:indent_guides_color_change_percent=1
 let g:indent_guides_guide_size=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_default_mapping=0
-
 let g:indent_guides_auto_colors=0
 augroup guides
   autocmd!
@@ -301,13 +287,12 @@ augroup guides
   au VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=235
 augroup END
 
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 filetype plugin indent on
-syntax enable
 
 augroup git
   autocmd!
@@ -325,14 +310,14 @@ set conceallevel=0
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 
-set updatetime=100
+set updatetime=300
 
 set background=dark
 
 set numberwidth=1
 set ruler
 set colorcolumn=80
-set noshowmode "lightline
+set noshowmode
 set ignorecase
 set smartcase
 set number
