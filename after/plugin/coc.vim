@@ -23,8 +23,6 @@ try
   " Use K to show documentation in preview window
   nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-  imap <silent><leader><TAB> <Plug>(coc-snippets-expand)
-
   " Use tab for trigger completion with characters ahead and navigate.
   " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
   inoremap <silent><expr> <TAB>
@@ -33,6 +31,8 @@ try
       \ coc#refresh()
   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+let g:coc_snippet_next = '<tab>'
 
   inoremap <silent><expr> <c-space> coc#refresh()
 

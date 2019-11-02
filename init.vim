@@ -46,7 +46,7 @@ nnoremap k gk
 nnoremap <space> /
 
 nnoremap § :Buffer<cr>
-nnoremap <leader>§ :GFiles<cr>
+nnoremap <leader>§ :GFiles --cached --others --exclude-standard<cr>
 nnoremap <leader><space> :BTags<cr>
 nnoremap <C-Space> :Ag<cr>
 

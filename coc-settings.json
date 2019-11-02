@@ -8,9 +8,6 @@
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
-  "snippets.ultisnips.directories": [
-    "snippets"
-  ],
   "languageserver": {
     "efm": {
       "command": "efm-langserver",
