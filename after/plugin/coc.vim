@@ -36,20 +36,19 @@ let g:coc_snippet_next = '<tab>'
 
   inoremap <silent><expr> <c-space> coc#refresh()
 
-  " Highlight symbol under cursor on CursorHold
-  autocmd CursorHold * silent call CocActionAsync('highlight')
-
   function! s:check_back_space() abort "{{{
   let col=col('.') - 1
   return !col || getline('.')[col - 1]  =~? '\s'
   endfunction"}}}
 
-  augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  augroup Coc
+    autocmd!
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * :call CocActionAsync('highlight')
   augroup end
 
   " Show all diagnostics

@@ -146,6 +146,11 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
+augroup CheckTime
+  autocmd!
+  autocmd CursorHold,CursorHoldI * if buffer_name("%") != "[Command Line]" | checktime | endif
+augroup END
+
 let g:pymode_python='python3'
 
 augroup filetype_python
@@ -164,8 +169,6 @@ augroup git
   au FileType gitcommit,gitrebase,vim let g:gutentags_enabled=0
   au Colorscheme * :hi Git2Add ctermfg=70 ctermbg=237
 augroup END
-
-au CursorHold,CursorHoldI * checktime
 
 " create dir if does not exists on save
 function s:MkNonExDir(file, buf)
