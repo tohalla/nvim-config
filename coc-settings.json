@@ -8,11 +8,17 @@
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
+  "yaml.schemas": {
+    "Kubernetes": "*.yaml"
+  },
+  "yaml.format.enable": true,
+  "yaml.completion": true,
+  "yaml.validate": true,
   "languageserver": {
     "efm": {
       "command": "efm-langserver",
       "args": [],
-      "filetypes": ["vim", "markdown", "yaml"]
+      "filetypes": ["vim", "markdown"]
     }
   }
 }

@@ -46,9 +46,9 @@ nnoremap k gk
 nnoremap <space> /
 
 nnoremap § :Buffer<cr>
-nnoremap <leader>§ :GFiles --cached --others --exclude-standard<cr>
-nnoremap <leader><space> :BTags<cr>
-nnoremap <C-Space> :Ag<cr>
+nnoremap <silent> <leader>§ :GFiles --cached --others --exclude-standard<cr>
+nnoremap <silent> <leader><space> :BTags<cr>
+nnoremap <silent> <C-Space> :Ag<cr>
 
 " Keep search results at the center of screen
 nnoremap n nzz
@@ -90,7 +90,6 @@ Plug 'neoclide/coc-yaml', {'do': 'npm i'}
 Plug 'neoclide/coc-eslint', {'do': 'npm i'}
 Plug 'neoclide/coc-tslint', {'do': 'npm i'}
 Plug 'neoclide/coc-css', {'do': 'npm i'}
-Plug 'neoclide/coc-highlight', {'do': 'npm i'}
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -98,6 +97,7 @@ Plug 'rhysd/vim-grammarous'
 
 " GIT
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 
 Plug 'tomtom/tcomment_vim'
@@ -109,11 +109,12 @@ Plug 'tomasr/molokai'
 
 " Language support
 Plug 'plasticboy/vim-markdown'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm i'  }
 
 Plug 'lervag/vimtex'
 
 Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 
