@@ -13,17 +13,6 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 inoremap <esc> <nop>
 
-" local replace
-nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
-
-" For global replace
-nnoremap gR gD:%s/<C-R>///gc<left><left><left>
-
-inoremap ⁱ <esc>i
-inoremap ² <esc>gja
-inoremap ³ <esc>gka
-inoremap ⁴ <esc>la
-
 " Window mappings
 noremap <up> <C-w><up>
 noremap <down> <C-w><down>
@@ -33,41 +22,33 @@ noremap <M-right> <C-w>>
 noremap <M-left> <C-w><
 noremap <M-up> <C-w>+
 noremap <M-down> <C-w>-
-noremap <leader>p <C-w><C-w>
-noremap <BS> <C-w>q
 noremap <leader><Leader> :bd<cr>
 noremap <leader>` :split<cr>
 noremap <leader>~ :vsplit<cr>
 
 noremap <leader>ö :only<cr>
 
-nnoremap <leader>o :bn<cr>
-nnoremap <leader>i :bp<cr>
+nnoremap <C-j> :bn<cr>
+nnoremap <C-k> :bp<cr>
+nnoremap <C-l> :tabn<cr>
+nnoremap <C-h> :tabp<cr>
+
 inoremap jk <ESC>
 
 inoremap <F5> <Esc><F5>
 inoremap <F6> <Esc><F6>
 
 nnoremap Y y$
+
 nnoremap j gj
 nnoremap k gk
+
 nnoremap <space> /
-nnoremap ö %
-
-nnoremap TT :TagbarToggle<CR>
-
-nnoremap <C-n> :NERDTreeToggle<cr>
 
 nnoremap § :Buffer<cr>
 nnoremap <leader>§ :Files<cr>
 nnoremap <leader><space> :BTags<cr>
 nnoremap <C-Space> :Ag<cr>
-
-" GIT
-nnoremap <leader>za :GitGutterFold<cr>
-nnoremap <leader>c :!Git commit -m ""<left>
-nmap ä <Plug>(GitGutterNextHunk)
-nmap Ä <Plug>(GitGutterPrevHunk)
 
 " Keep search results at the center of screen
 nnoremap n nzz
@@ -77,79 +58,7 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-nnoremap <leader>x "_x
-
 noremap <silent> <leader><cr> :noh<cr>
-
-nnoremap <leader>u :UndotreeToggle<cr>
-
-""coc
-nmap <silent> <leader>9 <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>0 <Plug>(coc-diagnostic-next)
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> <leader>R <Plug>(coc-references)
-
-nmap <silent> <leader>d <Plug>(coc-range-select)
-xmap <silent> <leader>d <Plug>(coc-range-select)
-
-" Remap for rename current word
-nmap <leader>r <Plug>(coc-rename)
-
-" Remap for format selected region
-xmap <leader>f <Plug>(coc-format-selected)
-nmap <leader>f <Plug>(coc-format-selected)
-
-" Fix autofix problem of current line
-nmap <leader>qf <Plug>(coc-fix-current)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-imap <silent><leader><TAB> <Plug>(coc-snippets-expand)
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-  "coc.preferences.triggerSignatureHelp": true,
-function! s:check_back_space() abort "{{{
-  let col=col('.') - 1
-  return !col || getline('.')[col - 1]  =~? '\s'
-endfunction"}}}
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Show all diagnostics
-nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
-
-command! -nargs=0 Format :call CocAction('format')
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
@@ -170,9 +79,18 @@ Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'majutsushi/tagbar'
 
-" autocompletion
+Plug 'SirVer/ultisnips'
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'honza/vim-snippets'
+Plug 'neoclide/coc-snippets', {'do': 'npm i'}
+Plug 'neoclide/coc-tsserver', {'do': 'npm i'}
+Plug 'neoclide/coc-prettier', {'do': 'npm i'}
+Plug 'neoclide/coc-json', {'do': 'npm i'}
+Plug 'neoclide/coc-yaml', {'do': 'npm i'}
+Plug 'neoclide/coc-eslint', {'do': 'npm i'}
+Plug 'neoclide/coc-tslint', {'do': 'npm i'}
+Plug 'neoclide/coc-css', {'do': 'npm i'}
+Plug 'neoclide/coc-highlight', {'do': 'npm i'}
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -217,27 +135,9 @@ set textwidth=500
 
 set wrap "Wrap lines
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => linters, ui
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set completeopt+=preview
 
-let g:airline#extensions#tabline#left_sep=' '
-let g:airline#extensions#tabline#left_alt_sep='|'
-let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#tabline#formatter='unique_tail_improved'
-let g:airline_theme='distinguished'
-
-autocmd ColorScheme * hi clear SignColumn
-autocmd ColorScheme * hi GitGutterAdd guifg=green
-autocmd ColorScheme * hi GitGutterChange guifg=darkyellow
-autocmd ColorScheme * hi GitGutterDelete guifg=red
-autocmd ColorScheme * hi GitGutterChangeDelete guifg=darkyellow
-
-set background=dark
-set termguicolors
-set syntax
-colorscheme molokai
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " close loclist when buffer is closed
 augroup CloseLoclistWindowGroup
@@ -252,20 +152,8 @@ augroup filetype_python
   autocmd FileType python noremap <buffer> <F5> :w <cr>:exec '!python' shellescape(@%, 1)<cr>
 augroup END
 
-let g:indent_guides_color_change_percent=1
-let g:indent_guides_guide_size=0
-let g:indent_guides_enable_on_vim_startup=1
-let g:indent_guides_default_mapping=0
-let g:indent_guides_auto_colors=0
-augroup guides
-  autocmd!
-  au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=234
-  au VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=235
-augroup END
-
 set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 filetype plugin indent on
@@ -344,9 +232,6 @@ set novisualbell
 set list
 set listchars=tab:\ \ ,extends:›,precedes:‹,nbsp:·,trail:·
 
-let g:vim_markdown_new_list_item_indent=2
-let g:vim_markdown_math=1
-let g:vim_markdown_folding_disabled = 1
 let g:latex_viewer='mupdf'
 set nofoldenable
 
@@ -367,3 +252,8 @@ if has('persistent_undo')
   set undofile
   set undodir=~/.config/nvim/tmp/undo//
 endif
+
+let g:indent_guides_guide_size=0
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_default_mapping=0
+
