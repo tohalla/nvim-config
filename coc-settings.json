@@ -1,12 +1,16 @@
 {
+  "prettier.requireConfig": true,
   "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 10,
+  "suggest.maxCompleteItemCount": 20,
   "coc.preferences.formatOnSaveFiletypes": [],
   "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx"],
   "signature.target": ["float", "echo"],
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
+  "snippets.ultisnips.directories": [
+    "snippets"
+  ],
   "languageserver": {
     "efm": {
       "command": "efm-langserver",
