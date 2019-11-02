@@ -46,7 +46,7 @@ nnoremap k gk
 nnoremap <space> /
 
 nnoremap § :Buffer<cr>
-nnoremap <leader>§ :Files<cr>
+nnoremap <leader>§ :GFiles<cr>
 nnoremap <leader><space> :BTags<cr>
 nnoremap <C-Space> :Ag<cr>
 
@@ -64,7 +64,7 @@ noremap <silent> <leader><cr> :noh<cr>
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
 
