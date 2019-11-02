@@ -1,2 +1,4 @@
-nnoremap <leader>u :UndotreeToggle<cr>
-
+try
+  nnoremap <leader>u :UndotreeToggle<cr>
+catch
+endtry

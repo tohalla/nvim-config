@@ -1,5 +1,7 @@
-nnoremap <leader>za :GitGutterFold<cr>
-nnoremap <leader>c :!Git commit -m ""<left>
-nmap ä <Plug>(GitGutterNextHunk)
-nmap Ä <Plug>(GitGutterPrevHunk)
-
+try
+  nnoremap <leader>za :GitGutterFold<cr>
+  nnoremap <leader>c :!Git commit -m ""<left>
+  nmap ä <Plug>(GitGutterNextHunk)
+  nmap Ä <Plug>(GitGutterPrevHunk)
+catch
+endtry
