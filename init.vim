@@ -72,6 +72,8 @@ Plug 'godlygeek/tabular'
 Plug 'justinmk/vim-sneak'
 Plug 'mbbill/undotree'
 
+Plug 'tpope/vim-abolish'
+
 " UI
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -90,6 +92,7 @@ Plug 'neoclide/coc-yaml', {'do': 'npm i'}
 Plug 'neoclide/coc-eslint', {'do': 'npm i'}
 Plug 'neoclide/coc-tslint', {'do': 'npm i'}
 Plug 'neoclide/coc-css', {'do': 'npm i'}
+Plug 'neoclide/coc-sources', {'do': 'npm i'}
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
