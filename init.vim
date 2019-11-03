@@ -23,6 +23,12 @@ noremap <M-left> <C-w><
 noremap <M-up> <C-w>+
 noremap <M-down> <C-w>-
 noremap <silent> <leader><Leader> :bd<cr>
+noremap <silent> <leader>w :w<cr>:bd<cr>
+
+nnoremap <silent> <leader>m :cnext<cr>
+nnoremap <silent> <leader>n :cprev<cr>
+nnoremap <silent> <leader>q :cfirst<cr>
+nnoremap <silent> <leader>Q :clast<cr>
 
 noremap <silent> <leader>ö :only<cr>
 
