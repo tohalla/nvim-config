@@ -126,7 +126,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm i'  }
 Plug 'lervag/vimtex'
 
 Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 
