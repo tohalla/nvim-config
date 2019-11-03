@@ -43,6 +43,9 @@ inoremap jk <ESC>
 inoremap <F5> <Esc><F5>
 inoremap <F6> <Esc><F6>
 
+nnoremap <j zj
+nnoremap <k zk
+
 nnoremap Y y$
 
 nnoremap j gj
@@ -75,6 +78,7 @@ Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'godlygeek/tabular'
 Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-repeat'
 Plug 'mbbill/undotree'
 
 Plug 'tpope/vim-abolish'
