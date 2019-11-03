@@ -9,7 +9,6 @@ try
 
   set background=dark
   set termguicolors
-  set syntax=1
   colorscheme molokai
 catch
 endtry

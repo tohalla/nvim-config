@@ -66,12 +66,11 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-noremap <silent> <leader><cr> :noh<cr>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
+Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
@@ -139,7 +138,6 @@ set expandtab
 set shiftwidth=2
 set softtabstop=2
 
-set autoindent
 set smartindent
 
 set linebreak
@@ -168,8 +166,6 @@ augroup filetype_python
   autocmd!
   autocmd FileType python noremap <buffer> <F5> :w <cr>:exec '!python' shellescape(@%, 1)<cr>
 augroup END
-
-filetype plugin indent on
 
 augroup git
   autocmd!
@@ -207,7 +203,6 @@ set updatetime=100
 set background=dark
 
 set numberwidth=1
-set ruler
 set colorcolumn=80
 set noshowmode
 set ignorecase
@@ -220,7 +215,6 @@ set nopaste
 set nobackup
 set nowritebackup
 set noswapfile
-set autoread
 
 set hidden
 set backspace=indent,eol,start
@@ -228,7 +222,6 @@ set showmatch
 
 "search
 set hlsearch
-set incsearch
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 set scrolloff=1
