@@ -169,10 +169,6 @@ augroup filetype_python
   autocmd FileType python noremap <buffer> <F5> :w <cr>:exec '!python' shellescape(@%, 1)<cr>
 augroup END
 
-set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}
-set statusline+=%#warningmsg#
-set statusline+=%*
-
 filetype plugin indent on
 
 augroup git
