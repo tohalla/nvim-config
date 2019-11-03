@@ -22,16 +22,15 @@ noremap <M-right> <C-w>>
 noremap <M-left> <C-w><
 noremap <M-up> <C-w>+
 noremap <M-down> <C-w>-
-noremap <leader><Leader> :bd<cr>
-noremap <leader>` :split<cr>
-noremap <leader>~ :vsplit<cr>
+noremap <silent> <leader><Leader> :bd<cr>
 
-noremap <leader>ö :only<cr>
+noremap <silent> <leader>ö :only<cr>
 
-nnoremap <C-j> :bn<cr>
-nnoremap <C-k> :bp<cr>
-nnoremap <C-l> :tabn<cr>
-nnoremap <C-h> :tabp<cr>
+nnoremap <silent> <C-j> :bn<cr>
+nnoremap <silent> <C-k> :bp<cr>
+
+nnoremap <silent> <BS><BS> :tabnew<cr>
+nnoremap <silent> <leader><BS> :bd<cr>:tabclose<cr>
 
 inoremap jk <ESC>
 
