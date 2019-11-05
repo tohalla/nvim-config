@@ -14,12 +14,8 @@ inoremap <right> <nop>
 inoremap <esc> <nop>
 
 " Window mappings
-noremap <up> <C-w><up>
-noremap <down> <C-w><down>
-noremap <left> <C-w><left>
-noremap <right> <C-w><rigHt>
-noremap <silent> <leader><Leader> :bd<cr>
-noremap <silent> <leader>w :w<cr>:bd<cr>
+noremap <silent> <leader>wq :bd<cr>
+noremap <silent> <leader>ww :w<cr>:bd<cr>
 
 nnoremap <silent> ]q :cnext<cr>
 nnoremap <silent> [q :cprev<cr>
