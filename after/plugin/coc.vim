@@ -1,6 +1,6 @@
 try
-  nmap <silent> <leader>k <Plug>(coc-diagnostic-prev)
-  nmap <silent> <leader>j <Plug>(coc-diagnostic-next)
+  nmap <silent> [k <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]k <Plug>(coc-diagnostic-next)
   " Remap keys for gotos
   nmap <silent> gd <Plug>(coc-definition)
   nmap <silent> gy <Plug>(coc-type-definition)
