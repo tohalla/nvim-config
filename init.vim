@@ -1,7 +1,7 @@
 scriptencoding utf-8
 
-let mapleader='å'
-let maplocalleader='ä'
+let mapleader=' '
+let maplocalleader=' '
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Keybindings
@@ -18,17 +18,17 @@ noremap <up> <C-w><up>
 noremap <down> <C-w><down>
 noremap <left> <C-w><left>
 noremap <right> <C-w><rigHt>
-noremap <M-right> <C-w>>
-noremap <M-left> <C-w><
-noremap <M-up> <C-w>+
-noremap <M-down> <C-w>-
 noremap <silent> <leader><Leader> :bd<cr>
 noremap <silent> <leader>w :w<cr>:bd<cr>
 
-nnoremap <silent> <leader>m :cnext<cr>
-nnoremap <silent> <leader>n :cprev<cr>
-nnoremap <silent> <leader>q :cfirst<cr>
-nnoremap <silent> <leader>Q :clast<cr>
+nnoremap <silent> ]q :cnext<cr>
+nnoremap <silent> [q :cprev<cr>
+nnoremap <silent> ]Q :cfirst<cr>
+nnoremap <silent> ]Q :clast<cr>
+nnoremap <silent> ]a :next<cr>
+nnoremap <silent> [a :prev<cr>
+nnoremap <silent> ]A :first<cr>
+nnoremap <silent> ]A :last<cr>
 
 noremap <silent> <leader>o :only<cr>
 
@@ -43,20 +43,20 @@ inoremap jk <ESC>
 inoremap <F5> <Esc><F5>
 inoremap <F6> <Esc><F6>
 
-nnoremap <j zj
-nnoremap <k zk
+nnoremap <silent> [t :tprev
+nnoremap <silent> ]t :tnext
+nnoremap <silent> [T :tfirst
+nnoremap <silent> ]T :tlast
 
 nnoremap Y y$
 
 nnoremap j gj
 nnoremap k gk
 
-nnoremap <space> /
-
 nnoremap § :Buffer<cr>
 nnoremap <silent> <leader>p :GFiles --cached --others --exclude-standard<cr>
-nnoremap <silent> <leader><space> :BTags<cr>
-nnoremap <silent> <C-Space> :Ag<cr>
+nnoremap <silent> <leader>t :BTags<cr>
+nnoremap <silent>  :Ag<cr>
 
 " Keep search results at the center of screen
 nnoremap n nzz

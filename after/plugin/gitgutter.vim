@@ -1,6 +1,6 @@
 try
   nnoremap <leader>za :GitGutterFold<cr>
-  nmap <C-s> <Plug>(GitGutterNextHunk)
-  nmap <C-q> <Plug>(GitGutterPrevHunk)
+  nmap ]c <Plug>(GitGutterNextHunk)
+  nmap [c <Plug>(GitGutterPrevHunk)
 catch
 endtry
