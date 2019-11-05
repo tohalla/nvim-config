@@ -30,10 +30,10 @@ nnoremap <silent> <leader>n :cprev<cr>
 nnoremap <silent> <leader>q :cfirst<cr>
 nnoremap <silent> <leader>Q :clast<cr>
 
-noremap <silent> <leader>ö :only<cr>
+noremap <silent> <leader>o :only<cr>
 
-nnoremap <silent> <C-j> :bn<cr>
-nnoremap <silent> <C-k> :bp<cr>
+nnoremap <silent> <C-j> :bp<cr>
+nnoremap <silent> <C-k> :bn<cr>
 
 nnoremap <silent> <BS><BS> :tabnew<cr>
 nnoremap <silent> <leader><BS> :bd<cr>:tabclose<cr>
@@ -73,7 +73,6 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'godlygeek/tabular'
 Plug 'justinmk/vim-sneak'
@@ -169,7 +168,6 @@ augroup END
 
 augroup git
   autocmd!
-  au FileType gitcommit,gitrebase,vim let g:gutentags_enabled=0
   au Colorscheme * :hi Git2Add ctermfg=70 ctermbg=237
 augroup END
 

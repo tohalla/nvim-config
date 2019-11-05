@@ -1,14 +1,14 @@
 try
-  nmap <silent> Ö <Plug>(coc-diagnostic-prev)
-  nmap <silent> ö <Plug>(coc-diagnostic-next)
+  nmap <silent> <leader>k <Plug>(coc-diagnostic-prev)
+  nmap <silent> <leader>j <Plug>(coc-diagnostic-next)
   " Remap keys for gotos
   nmap <silent> gd <Plug>(coc-definition)
   nmap <silent> gy <Plug>(coc-type-definition)
   nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
 
-  nmap <silent> <leader>d <Plug>(coc-range-select)
-  xmap <silent> <leader>d <Plug>(coc-range-select)
+  nmap <silent> + <Plug>(coc-range-select)
+  xmap <silent> + <Plug>(coc-range-select)
 
   " Remap for rename current word
   nmap <leader>r <Plug>(coc-rename)
@@ -32,7 +32,7 @@ try
   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-let g:coc_snippet_next = '<tab>'
+  let g:coc_snippet_next = '<tab>'
 
   inoremap <silent><expr> <c-space> coc#refresh()
 
