@@ -114,6 +114,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'tomasr/molokai'
 
 " Language support
+Plug 'ekalinin/Dockerfile.vim'
+
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm i'  }
 

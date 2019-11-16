@@ -1,17 +1,18 @@
 {
-  "prettier.requireConfig": true,
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
-  "coc.preferences.formatOnSaveFiletypes": [],
+  "coc.preferences.formatOnSaveFiletypes": ["json", "yaml", "Markdown"],
   "eslint.filetypes": ["javascript", "javascriptreact"],
   "signature.target": ["float", "echo"],
+  "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
   "typescript.preferences.quoteStyle": "double",
   "javascript.preferences.quoteStyle": "double",
   "yaml.schemas": {
-    "Kubernetes": "*.yaml"
+    "Kubernetes": "*.yaml",
+    "https://raw.githubusercontent.com/GoogleContainerTools/skaffold/master/docs/content/en/schemas/v1.json": "skaffold.yaml"
   },
   "yaml.format.enable": true,
   "yaml.completion": true,
@@ -21,6 +22,11 @@
       "command": "efm-langserver",
       "args": [],
       "filetypes": ["vim", "markdown"]
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
     }
   }
 }
