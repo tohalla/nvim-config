@@ -1,8 +1,10 @@
 {
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
-  "coc.preferences.formatOnSaveFiletypes": ["json", "yaml", "Markdown"],
+  "coc.preferences.formatOnSaveFiletypes": ["json", "yaml", "Markdown", "typescript", "typescriptreact"],
   "eslint.filetypes": ["javascript", "javascriptreact"],
+  "tslint.autoFixOnSave": true,
+  "eslint.autoFixOnSave": true,
   "signature.target": ["float", "echo"],
   "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "•",

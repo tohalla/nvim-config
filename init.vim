@@ -14,14 +14,14 @@ inoremap <right> <nop>
 inoremap <esc> <nop>
 
 " Window mappings
-noremap <silent> <leader>wq :bd<cr>
-noremap <silent> <leader>ww :w<cr>:bd<cr>
+noremap <silent> <leader>bd :bd<cr>
+noremap <silent> <leader>bs :w<cr>:bd<cr>
 
 nnoremap <silent> ]q :cnext<cr>
 nnoremap <silent> [q :cprev<cr>
 nnoremap <silent> ]Q :cfirst<cr>
 nnoremap <silent> ]Q :clast<cr>
-nnoremap <silent> ]a :next<cr>
+  nnoremap <silent> ]a :next<cr>
 nnoremap <silent> [a :prev<cr>
 nnoremap <silent> ]A :first<cr>
 nnoremap <silent> ]A :last<cr>
@@ -93,8 +93,10 @@ Plug 'neoclide/coc-prettier', {'do': 'npm i'}
 Plug 'neoclide/coc-json', {'do': 'npm i'}
 Plug 'neoclide/coc-yaml', {'do': 'npm i'}
 Plug 'neoclide/coc-eslint', {'do': 'npm i'}
-Plug 'neoclide/coc-tslint', {'do': 'npm i'}
+Plug 'neoclide/coc-tsserver', {'do': 'npm i'}
+Plug 'neoclide/coc-tslint-plugin', {'do': 'npm i'}
 Plug 'neoclide/coc-css', {'do': 'npm i'}
+Plug 'neoclide/coc-vimtex', {'do': 'npm i'}
 Plug 'neoclide/coc-sources', {'do': 'npm i'}
 
 " Linting/formatting etc
@@ -124,6 +126,7 @@ Plug 'lervag/vimtex'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 call plug#end()
