@@ -149,6 +149,19 @@ set completeopt+=preview
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+augroup Quickfix
+  autocmd!
+  autocmd FileType qf setlocal norelativenumber
+  autocmd FileType qf setlocal number
+  autocmd FileType qf set nobuflisted
+augroup END
+
+augroup BreakLine
+  autocmd!
+  autocmd FileType tex setlocal tw=0
+  autocmd FileType tex setlocal formatoptions=cqa
+augroup END
+
 " close loclist when buffer is closed
 augroup CloseLoclistWindowGroup
   autocmd!

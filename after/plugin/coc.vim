@@ -36,10 +36,13 @@ try
 
   inoremap <silent><expr> <c-space> coc#refresh()
 
-  function! s:check_back_space() abort "{{{
-  let col=col('.') - 1
-  return !col || getline('.')[col - 1]  =~? '\s'
-  endfunction"}}}
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  let g:coc_snippet_next = '<leader>k'
+  let g:coc_snippet_prev = '<leader>j'
 
   augroup Coc
     autocmd!
