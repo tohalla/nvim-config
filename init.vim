@@ -15,13 +15,13 @@ inoremap <esc> <nop>
 
 " Window mappings
 noremap <silent> <leader>bd :bd<cr>
-noremap <silent> <leader>bs :w<cr>:bd<cr>
+noremap <silent> <leader>bw :w<cr>:bd<cr>
 
 nnoremap <silent> ]q :cnext<cr>
 nnoremap <silent> [q :cprev<cr>
 nnoremap <silent> ]Q :cfirst<cr>
 nnoremap <silent> ]Q :clast<cr>
-  nnoremap <silent> ]a :next<cr>
+nnoremap <silent> ]a :next<cr>
 nnoremap <silent> [a :prev<cr>
 nnoremap <silent> ]A :first<cr>
 nnoremap <silent> ]A :last<cr>
@@ -158,8 +158,8 @@ augroup END
 
 augroup BreakLine
   autocmd!
-  autocmd FileType tex setlocal tw=0
-  autocmd FileType tex setlocal formatoptions=cqa
+  autocmd FileType tex setlocal tw=80
+  autocmd FileType tex setlocal wrap linebreak nolist
 augroup END
 
 " close loclist when buffer is closed
