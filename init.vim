@@ -87,17 +87,17 @@ Plug 'majutsushi/tagbar'
 Plug 'SirVer/ultisnips'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-snippets', {'do': 'npm i'}
-Plug 'neoclide/coc-tsserver', {'do': 'npm i'}
-Plug 'neoclide/coc-prettier', {'do': 'npm i'}
-Plug 'neoclide/coc-json', {'do': 'npm i'}
-Plug 'neoclide/coc-yaml', {'do': 'npm i'}
-Plug 'neoclide/coc-eslint', {'do': 'npm i'}
-Plug 'neoclide/coc-tsserver', {'do': 'npm i'}
-Plug 'neoclide/coc-tslint-plugin', {'do': 'npm i'}
-Plug 'neoclide/coc-css', {'do': 'npm i'}
-Plug 'neoclide/coc-vimtex', {'do': 'npm i'}
-Plug 'neoclide/coc-sources', {'do': 'npm i'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-sources', {'do': 'yarn install --frozen-lockfile'}
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
