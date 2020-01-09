@@ -1,7 +1,7 @@
 {
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
-  "coc.preferences.formatOnSaveFiletypes": ["json", "yaml", "Markdown", "typescript", "typescriptreact"],
+  "coc.preferences.formatOnSaveFiletypes": ["json", "yaml", "Markdown", "javascript", "typescript", "typescriptreact"],
   "eslint.filetypes": ["javascript", "javascriptreact"],
   "tslint.autoFixOnSave": true,
   "eslint.autoFixOnSave": true,
@@ -13,6 +13,7 @@
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
   "typescript.preferences.quoteStyle": "double",
+  "python.jediEnabled": false,
   "javascript.preferences.quoteStyle": "double",
   "yaml.schemas": {
     "Kubernetes": "*.yaml",

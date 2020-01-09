@@ -95,6 +95,7 @@ Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-sources', {'do': 'yarn install --frozen-lockfile'}
 
 " Linting/formatting etc
@@ -122,6 +123,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 Plug 'lervag/vimtex'
 
+Plug 'heavenshell/vim-jsdoc'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
@@ -220,6 +222,7 @@ set colorcolumn=80
 set noshowmode
 set ignorecase
 set smartcase
+set wildignorecase
 set number
 set relativenumber
 
@@ -250,6 +253,7 @@ set list
 set listchars=tab:\ \ ,extends:›,precedes:‹,nbsp:·,trail:·
 
 let g:latex_viewer='mupdf'
+set foldmethod=syntax
 set nofoldenable
 
 set diffopt+=vertical
