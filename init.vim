@@ -115,6 +115,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'tomasr/molokai'
 
 " Language support
+Plug 'chrisbra/csv.vim'
+
 Plug 'mattn/emmet-vim'
 Plug 'ekalinin/Dockerfile.vim'
 
@@ -132,8 +134,11 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
 Plug 'ludovicchabant/vim-gutentags'
+
+Plug 'lifepillar/pgsql.vim'
 call plug#end()
 
+let g:sql_type_default = 'pgsql'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
