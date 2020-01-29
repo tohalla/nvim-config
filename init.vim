@@ -25,6 +25,8 @@ nnoremap <silent> ]a :next<cr>
 nnoremap <silent> [a :prev<cr>
 nnoremap <silent> ]A :first<cr>
 nnoremap <silent> ]A :last<cr>
+nnoremap <silent> <leader>cc :cclose<cr>
+nnoremap <silent> <leader>co :copen<cr>
 
 noremap <silent> <leader>o :only<cr>
 
@@ -106,6 +108,7 @@ Plug 'rhysd/vim-grammarous'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
+Plug 'rhysd/git-messenger.vim'
 
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-surround'
