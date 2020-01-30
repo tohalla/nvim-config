@@ -13,7 +13,7 @@
   nnoremap <silent> <leader>gg :Gdiffsplit<cr>
 
   let g:git_messenger_no_default_mappings=0
-  nmap <silent> <C-w>m <Plug>(git-messenger)
+  nmap <silent> <C-g> <Plug>(git-messenger)
 
   augroup CloseLoclistWindowGroup
     autocmd!
