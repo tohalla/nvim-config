@@ -32,6 +32,7 @@ noremap <silent> <leader>o :only<cr>
 
 nnoremap <silent> <C-j> :bp<cr>
 nnoremap <silent> <C-k> :bn<cr>
+nnoremap <C-c> :bp\|bd #<CR>
 
 nnoremap <silent> <BS><BS> :tabnew<cr>
 nnoremap <silent> <leader><BS> :bd<cr>:tabclose<cr>
@@ -213,6 +214,7 @@ augroup END
 " jump to previous position when opening files
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
+let g:tcomment_mapleader1 = 'ä'
 " always show signcolumns
 set signcolumn=yes
 

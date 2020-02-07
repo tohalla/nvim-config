@@ -10,7 +10,7 @@
   nnoremap <silent> <leader>gb :Gblame<cr>
   nnoremap <silent> <leader>gw :Gwrite<cr>
   nnoremap <silent> <leader>g<BS> :Gread<cr>
-  nnoremap <silent> <leader>gg :Gdiffsplit<cr>
+  nnoremap <silent> <leader>gg :Gdiffsplit!<cr>
 
   let g:git_messenger_no_default_mappings=0
   nmap <silent> <C-g> <Plug>(git-messenger)
