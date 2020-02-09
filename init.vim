@@ -22,7 +22,9 @@ nnoremap <silent> <leader>co :copen<cr>
 
 noremap <silent> <leader>o :only<cr>
 
-nnoremap <C-c> :bp\|bd #<CR>
+nnoremap <silent> <C-c> :bp\|bd #<CR>
+nnoremap <silent> <C-k> :bn<CR>
+noremap <silent> <C-j> :bp<CR>
 
 nnoremap <silent> <BS><BS> :tabnew<cr>
 nnoremap <silent> <leader><BS> :bd<cr>:tabclose<cr>
@@ -31,11 +33,6 @@ inoremap jk <ESC>
 
 inoremap <F5> <Esc><F5>
 inoremap <F6> <Esc><F6>
-
-nnoremap <silent> [t :tprev
-nnoremap <silent> ]t :tnext
-nnoremap <silent> [T :tfirst
-nnoremap <silent> ]T :tlast
 
 nnoremap Y y$
 
