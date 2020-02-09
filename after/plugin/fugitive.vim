@@ -3,10 +3,10 @@
   nnoremap <silent> <leader>gc :Gcommit<cr>
   nnoremap <silent> <leader>gm :Git mergetool<cr>
   nnoremap <silent> <leader>gM :Gmerge<cr>
-  nnoremap <silent> <leader>gp :Gpush<cr>
-  nnoremap <silent> <leader><C-p> :Gpull<cr>
+  nnoremap <leader>gp :Gpush<cr>
+  nnoremap <leader><C-p> :Gpull<cr>
+  nnoremap <leader>gf :Gfetch<cr>
   nnoremap <silent> <leader>gl :Gclog<cr>
-  nnoremap <silent> <leader>gf :Gfetch<cr>
   nnoremap <silent> <leader>gb :Gblame<cr>
   nnoremap <silent> <leader>gw :Gwrite<cr>
   nnoremap <silent> <leader>g<BS> :Gread<cr>
