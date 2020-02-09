@@ -206,7 +206,7 @@ augroup END
 " jump to previous position when opening files
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-let g:tcomment_mapleader1 = 'ä'
+let g:tcomment_mapleader1 = 'å'
 " always show signcolumns
 set signcolumn=yes
 
