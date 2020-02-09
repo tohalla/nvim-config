@@ -17,21 +17,11 @@ inoremap <esc> <nop>
 noremap <silent> <leader>bd :bd<cr>
 noremap <silent> <leader>bw :w<cr>:bd<cr>
 
-nnoremap <silent> ]q :cnext<cr>
-nnoremap <silent> [q :cprev<cr>
-nnoremap <silent> ]Q :cfirst<cr>
-nnoremap <silent> ]Q :clast<cr>
-nnoremap <silent> ]a :next<cr>
-nnoremap <silent> [a :prev<cr>
-nnoremap <silent> ]A :first<cr>
-nnoremap <silent> ]A :last<cr>
 nnoremap <silent> <leader>cc :cclose<cr>
 nnoremap <silent> <leader>co :copen<cr>
 
 noremap <silent> <leader>o :only<cr>
 
-nnoremap <silent> <C-j> :bp<cr>
-nnoremap <silent> <C-k> :bn<cr>
 nnoremap <C-c> :bp\|bd #<CR>
 
 nnoremap <silent> <BS><BS> :tabnew<cr>
@@ -78,7 +68,9 @@ Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'mbbill/undotree'
 
+Plug 'wellle/targets.vim'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-unimpaired'
 
 " UI
 Plug 'vim-airline/vim-airline'
