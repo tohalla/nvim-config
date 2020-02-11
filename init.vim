@@ -155,6 +155,10 @@ augroup Quickfix
   autocmd FileType qf setlocal norelativenumber
   autocmd FileType qf setlocal number
   autocmd FileType qf set nobuflisted
+  au FileType qf call AdjustWindowHeight(1, 10)
+  function! AdjustWindowHeight(minheight, maxheight)
+    exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+  endfunction
 augroup END
 
 augroup BreakLine
