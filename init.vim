@@ -77,18 +77,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'majutsushi/tagbar'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-sources', {'do': 'yarn install --frozen-lockfile'}
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -118,6 +106,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 Plug 'lervag/vimtex'
 
+Plug 'rust-lang/rust.vim'
+
 Plug 'heavenshell/vim-jsdoc'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
@@ -130,6 +120,20 @@ Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'lifepillar/pgsql.vim'
 call plug#end()
+
+let g:coc_global_extensions = [
+  \'coc-snippets',
+  \'coc-tsserver',
+  \'coc-prettier',
+  \'coc-json',
+  \'coc-yaml',
+  \'coc-eslint',
+  \'coc-tsserver',
+  \'coc-tslint-plugin',
+  \'coc-css',
+  \'coc-rust-analyzer',
+  \'coc-vimtex',
+  \'coc-python' ]
 
 let g:sql_type_default = 'pgsql'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
