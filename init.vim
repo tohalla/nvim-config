@@ -129,7 +129,6 @@ let g:coc_global_extensions = [
   \'coc-yaml',
   \'coc-eslint',
   \'coc-tsserver',
-  \'coc-tslint-plugin',
   \'coc-css',
   \'coc-rust-analyzer',
   \'coc-vimtex',
