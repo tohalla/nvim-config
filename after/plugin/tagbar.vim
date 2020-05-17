@@ -1,4 +1,4 @@
 try
-  nnoremap TT :TagbarToggle<CR>
+  nnoremap TT :TagbarOpenAutoClose<CR>
 catch
 endtry

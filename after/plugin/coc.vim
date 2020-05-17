@@ -57,7 +57,7 @@ try
   " Show all diagnostics
   nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
   " Show all commands
-  nnoremap <silent> <leader>P  :<C-u>CocList commands<cr>
+  nnoremap <silent> <C-P>  :<C-u>CocList commands<cr>
 
   command! -nargs=0 Format :call CocAction('format')
   command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
@@ -69,5 +69,7 @@ try
     call CocAction('doHover')
   endif
   endfunction
+
+  hi Quote ctermbg=109 guifg=#83a598
 catch
 endtry

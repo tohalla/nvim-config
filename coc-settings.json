@@ -3,17 +3,14 @@
   "suggest.maxCompleteItemCount": 20,
   "coc.preferences.formatOnSaveFiletypes": ["rust", "json", "yaml", "Markdown", "javascript", "typescript", "typescriptreact"],
   "eslint.filetypes": ["javascript", "javascriptreact"],
-  "tslint.autoFixOnSave": true,
   "eslint.autoFixOnSave": true,
-  "signature.target": ["float", "echo"],
+  "signature.target": "float",
   "prettier.tslintIntegration": true,
   "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
-  "typescript.preferences.quoteStyle": "double",
   "python.jediEnabled": false,
-  "javascript.preferences.quoteStyle": "double",
   "yaml.schemas": {
     "Kubernetes": "*.yaml",
     "https://raw.githubusercontent.com/GoogleContainerTools/skaffold/master/docs/content/en/schemas/v1.json": "skaffold.yaml"
