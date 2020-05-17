@@ -1,11 +1,8 @@
-  try
+try
   nnoremap <silent> <leader>gs :Gstatus<cr>
   nnoremap <silent> <leader>gc :Gcommit<cr>
   nnoremap <silent> <leader>gm :Git mergetool<cr>
   nnoremap <silent> <leader>gM :Gmerge<cr>
-  nnoremap <leader>gp :Gpush<cr>
-  nnoremap <leader><C-p> :Gpull<cr>
-  nnoremap <leader>gf :Gfetch<cr>
   nnoremap <silent> <leader>gl :Gclog<cr>
   nnoremap <silent> <leader>gb :Gblame<cr>
   nnoremap <silent> <leader>gw :Gwrite<cr>
