@@ -1,10 +1,17 @@
 {
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
-  "coc.preferences.formatOnSaveFiletypes": ["rust", "json", "yaml", "Markdown", "javascript", "typescript", "typescriptreact"],
-  "eslint.filetypes": ["javascript", "javascriptreact"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "rust",
+    "json",
+    "yaml",
+    "Markdown",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "eslint.autoFixOnSave": true,
-  "signature.target": "float",
   "prettier.tslintIntegration": true,
   "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "•",
