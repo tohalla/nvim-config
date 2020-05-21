@@ -39,7 +39,7 @@ nnoremap Y y$
 nnoremap j gj
 nnoremap k gk
 
-nnoremap § :Buffer<cr>
+nnoremap <silent> <leader>l :Buffer<cr>
 nnoremap <silent> <leader>p :GFiles --cached --others --exclude-standard<cr>
 nnoremap <silent> <leader>t :BTags<cr>
 nnoremap <silent>  :Ag<cr>
