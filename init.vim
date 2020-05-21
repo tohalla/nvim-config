@@ -52,6 +52,11 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
+nnoremap <silent> <leader>d "_d
+nnoremap <silent> <leader>D "_D
+nnoremap <silent> <leader>y "*y
+nnoremap <silent> <leader>Y "*Y
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
