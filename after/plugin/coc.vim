@@ -41,9 +41,6 @@ try
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
 
-  let g:coc_snippet_next = '<leader>k'
-  let g:coc_snippet_prev = '<leader>j'
-
   augroup Coc
     autocmd!
     " Setup formatexpr specified filetype(s).
@@ -55,11 +52,11 @@ try
   augroup end
 
   " Show all diagnostics
-  nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+  nnoremap <silent> <leader>k  :<C-u>CocList diagnostics<cr>
   " Show all commands
   nnoremap <silent> <C-P>  :<C-u>CocList commands<cr>
   nnoremap <silent> <leader><leader> :<C-u>CocList outline<cr>
-  nnoremap <silent> <leader>/ :CocList searchhistory<cr>
+  nnoremap <silent> <leader>/ :<C-u>CocList searchhistory<cr>
 
   command! -nargs=0 Format :call CocAction('format')
   command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
