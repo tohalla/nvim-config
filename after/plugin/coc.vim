@@ -5,7 +5,7 @@ try
   nmap <silent> gd <Plug>(coc-definition)
   nmap <silent> gy <Plug>(coc-type-definition)
   nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
+  nmap <silent> gr <Plug>(coc-references-used)
 
   nmap <silent> + <Plug>(coc-range-select)
   xmap <silent> + <Plug>(coc-range-select)
@@ -30,9 +30,11 @@ try
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-  inoremap <expr><cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-  let g:coc_snippet_next = '<tab>'
+  let g:coc_snippet_prev = '[<tab>'
+  let g:coc_snippet_next = ']<tab>'
 
   inoremap <silent><expr> <c-space> coc#refresh()
 
@@ -59,6 +61,7 @@ try
   nnoremap <silent> <leader><leader> :<C-u>CocList outline<cr>
   nnoremap <silent> <leader>/ :<C-u>CocList searchhistory<cr>
   nnoremap <silent> <leader>/ :<C-u>CocList searchhistory<cr>
+  nnoremap <silent> <leader>a  :<C-u>CocList -A --normal yank<cr>
 
   command! -nargs=0 Format :call CocAction('format')
   command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')

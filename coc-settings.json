@@ -2,16 +2,29 @@
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
   "coc.preferences.formatOnSaveFiletypes": [
+    "scss",
+    "css",
     "rust",
     "json",
     "yaml",
+    "terraform",
+    "svelte",
     "Markdown",
+    "python",
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "dart",
+    "go"
   ],
   "eslint.autoFixOnSave": true,
+  "eslint.filetypes": [
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact"
+  ],
   "prettier.tslintIntegration": true,
   "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "•",
@@ -35,6 +48,15 @@
       "command": "docker-langserver",
       "filetypes": ["dockerfile"],
       "args": ["--stdio"]
+    },
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {}
     }
-  }
+  },
+  "yank.list.maxsize": 50,
+  "yank.highlight.duration": 100,
+  "yank.priority": 1
 }

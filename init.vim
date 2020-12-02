@@ -14,8 +14,9 @@ inoremap <right> <nop>
 inoremap <esc> <nop>
 
 " Window mappings
-noremap <silent> <leader>bd :bd<cr>
-noremap <silent> <leader>bw :w<cr>:bd<cr>
+noremap <silent> <leader>bd :BD<cr>
+noremap <silent> <leader>bw :w<cr>:BD<cr>
+noremap <silent> <leader>wq :wq<cr>
 
 nnoremap <silent> <leader>cc :cclose<cr>
 nnoremap <silent> <leader>co :copen<cr>
@@ -40,7 +41,7 @@ nnoremap j gj
 nnoremap k gk
 
 nnoremap <silent> <leader>l :Buffer<cr>
-nnoremap <silent> <leader>p :GFiles --cached --others --exclude-standard<cr>
+nnoremap <silent> <leader>p :Files<cr>
 nnoremap <silent> <leader>t :BTags<cr>
 nnoremap <silent>  :Ag<cr>
 
@@ -52,8 +53,6 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-nnoremap <silent> <leader>d "_d
-nnoremap <silent> <leader>D "_D
 nnoremap <silent> <leader>y "*y
 nnoremap <silent> <leader>Y "*Y
 
@@ -62,6 +61,7 @@ nnoremap <silent> <leader>Y "*Y
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 Plug 'tpope/vim-sensible'
+Plug 'qpkorr/vim-bufkill'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -98,46 +98,38 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 
 " Colorschemes
-Plug 'tomasr/molokai'
+Plug 'morhetz/gruvbox'
 
 " Language support
-Plug 'chrisbra/csv.vim'
-
-Plug 'mattn/emmet-vim'
-Plug 'ekalinin/Dockerfile.vim'
-
-Plug 'plasticboy/vim-markdown'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-
+Plug 'sheerun/vim-polyglot'
+Plug 'hashivim/vim-terraform'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'lervag/vimtex'
 
-Plug 'rust-lang/rust.vim'
-
 Plug 'heavenshell/vim-jsdoc'
-Plug 'leafgarland/typescript-vim'
-Plug 'pangloss/vim-javascript'
-Plug 'maxmellon/vim-jsx-pretty'
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
+Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
-
 Plug 'ludovicchabant/vim-gutentags'
-
-Plug 'lifepillar/pgsql.vim'
 call plug#end()
 
 let g:coc_global_extensions = [
   \'coc-snippets',
   \'coc-tsserver',
-  \'coc-prettier',
   \'coc-json',
+  \'coc-go',
   \'coc-yaml',
-  \'coc-eslint',
+  \'coc-prettier@1.1.18',
   \'coc-tsserver',
   \'coc-lists',
   \'coc-css',
+  \'coc-prettier',
   \'coc-rust-analyzer',
   \'coc-vimtex',
+  \'coc-yank',
+  \'coc-flutter',
+  \'coc-eslint',
   \'coc-python' ]
 
 let g:sql_type_default = 'pgsql'
@@ -227,8 +219,6 @@ set shortmess+=c
 
 set updatetime=100
 
-set background=dark
-
 set numberwidth=1
 set colorcolumn=80
 set noshowmode
@@ -250,7 +240,6 @@ set showmatch
 
 "search
 set hlsearch
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 set scrolloff=1
 
@@ -280,6 +269,8 @@ set splitbelow
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set lazyredraw
+
 " This enables us to undo files even if you exit Vim.
 if has('persistent_undo')
   set undofile
@@ -290,3 +281,10 @@ let g:indent_guides_guide_size=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_default_mapping=0
 
+let g:rustfmt_autosave = 1
+
+let g:tex_flavor = 'latex'
+
+let g:gruvbox_contrast_dark = 'hard'
+set termguicolors
+colorscheme gruvbox
