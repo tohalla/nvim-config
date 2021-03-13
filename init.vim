@@ -56,6 +56,9 @@ nnoremap g# g#zz
 nnoremap <silent> <leader>y "*y
 nnoremap <silent> <leader>Y "*Y
 
+" C-a used for tmux
+nnoremap <C-X> <C-a>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -103,8 +106,12 @@ Plug 'morhetz/gruvbox'
 " Language support
 Plug 'sheerun/vim-polyglot'
 Plug 'hashivim/vim-terraform'
+Plug 'fatih/vim-go'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'lervag/vimtex'
+Plug 'fisadev/vim-isort'
+Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+Plug 'mattn/emmet-vim'
 
 Plug 'heavenshell/vim-jsdoc'
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -112,6 +119,7 @@ Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'vim-test/vim-test'
 call plug#end()
 
 let g:coc_global_extensions = [
@@ -120,7 +128,7 @@ let g:coc_global_extensions = [
   \'coc-json',
   \'coc-go',
   \'coc-yaml',
-  \'coc-prettier@1.1.18',
+  \'coc-prettier',
   \'coc-tsserver',
   \'coc-lists',
   \'coc-css',
@@ -130,6 +138,10 @@ let g:coc_global_extensions = [
   \'coc-yank',
   \'coc-flutter',
   \'coc-eslint',
+  \'coc-tailwindcss',
+  \'coc-markdownlint',
+  \'coc-html',
+  \'coc-emmet',
   \'coc-python' ]
 
 let g:sql_type_default = 'pgsql'
@@ -220,7 +232,7 @@ set shortmess+=c
 set updatetime=100
 
 set numberwidth=1
-set colorcolumn=80
+set colorcolumn=81
 set noshowmode
 set ignorecase
 set smartcase
@@ -277,14 +289,14 @@ if has('persistent_undo')
   set undodir=~/.config/nvim/tmp/undo//
 endif
 
-let g:indent_guides_guide_size=0
-let g:indent_guides_enable_on_vim_startup=1
-let g:indent_guides_default_mapping=0
-
-let g:rustfmt_autosave = 1
-
 let g:tex_flavor = 'latex'
 
 let g:gruvbox_contrast_dark = 'hard'
 set termguicolors
 colorscheme gruvbox
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'gitmessengerpopup']
+let g:indent_guides_auto_colors=0
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_default_mapping=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#2B2B2B guifg=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#1B1D1E guifg=0

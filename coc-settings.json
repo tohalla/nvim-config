@@ -19,25 +19,22 @@
     "go"
   ],
   "eslint.autoFixOnSave": true,
-  "eslint.filetypes": [
-    "typescript",
-    "typescriptreact",
-    "javascript",
-    "javascriptreact"
-  ],
   "prettier.tslintIntegration": true,
   "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
   "python.jediEnabled": false,
-  "yaml.schemas": {
-    "Kubernetes": "*.yaml",
-    "https://raw.githubusercontent.com/GoogleContainerTools/skaffold/master/docs/content/en/schemas/v1.json": "skaffold.yaml"
-  },
+  "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": true,
+  "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+  "rust-analyzer.procMacro.enable": true,
+  "python.formatting.provider": "black",
   "yaml.format.enable": true,
   "yaml.completion": true,
   "yaml.validate": true,
+  "python.pythonPath": "/Users/touko/.pyenv/shims/python",
+  "eslint.trace.server": "verbose",
   "languageserver": {
     "efm": {
       "command": "efm-langserver",
