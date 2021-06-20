@@ -43,6 +43,7 @@ nnoremap k gk
 nnoremap <silent> <leader>l :Buffer<cr>
 nnoremap <silent> <leader>p :Files<cr>
 nnoremap <silent> <leader>t :BTags<cr>
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 nnoremap <silent>  :Ag<cr>
 
 " Keep search results at the center of screen
@@ -72,7 +73,7 @@ vmap  <expr>  D        DVB_Duplicate()
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'qpkorr/vim-bufkill'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'godlygeek/tabular'
@@ -117,8 +118,9 @@ Plug 'fatih/vim-go'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'lervag/vimtex'
 Plug 'fisadev/vim-isort'
-Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'mattn/emmet-vim'
+Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
+Plug 'cespare/vim-toml'
 
 Plug 'heavenshell/vim-jsdoc'
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -130,6 +132,7 @@ Plug 'vim-test/vim-test'
 call plug#end()
 
 let g:coc_global_extensions = [
+  \'coc-actions',
   \'coc-snippets',
   \'coc-tsserver',
   \'coc-json',
@@ -149,6 +152,8 @@ let g:coc_global_extensions = [
   \'coc-markdownlint',
   \'coc-html',
   \'coc-emmet',
+  \'coc-toml',
+  \'coc-perl',
   \'coc-python' ]
 
 let g:sql_type_default = 'pgsql'
@@ -183,7 +188,7 @@ augroup END
 
 augroup BreakLine
   autocmd!
-  autocmd FileType tex setlocal tw=80
+  autocmd FileType tex setlocal textwidth=100
   autocmd FileType tex setlocal wrap linebreak nolist
 augroup END
 
@@ -239,7 +244,7 @@ set shortmess+=c
 set updatetime=100
 
 set numberwidth=1
-set colorcolumn=81
+set colorcolumn=+0
 set noshowmode
 set ignorecase
 set smartcase
@@ -301,7 +306,7 @@ let g:tex_flavor = 'latex'
 let g:gruvbox_contrast_dark = 'hard'
 set termguicolors
 colorscheme gruvbox
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'gitmessengerpopup']
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'gitmessengerpopup', 'godoc']
 let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_default_mapping=0

@@ -60,8 +60,8 @@ try
   nnoremap <silent> <C-T>  :<C-u>CocList tags<cr>
   nnoremap <silent> <leader><leader> :<C-u>CocList outline<cr>
   nnoremap <silent> <leader>/ :<C-u>CocList searchhistory<cr>
-  nnoremap <silent> <leader>/ :<C-u>CocList searchhistory<cr>
-  nnoremap <silent> <leader>a  :<C-u>CocList -A --normal yank<cr>
+  nnoremap <silent> <leader>a  :<C-u>CocList -A yank<cr>
+  nnoremap <silent> <leader>j  :<C-u>CocList -A location<cr>
 
   command! -nargs=0 Format :call CocAction('format')
   command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
