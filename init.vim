@@ -91,8 +91,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'majutsushi/tagbar'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'machakann/vim-highlightedyank'
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -121,6 +120,13 @@ Plug 'fisadev/vim-isort'
 Plug 'mattn/emmet-vim'
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'cespare/vim-toml'
+Plug 'robertbasic/vim-hugo-helper'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 
 Plug 'heavenshell/vim-jsdoc'
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -130,31 +136,6 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'vim-test/vim-test'
 call plug#end()
-
-let g:coc_global_extensions = [
-  \'coc-actions',
-  \'coc-snippets',
-  \'coc-tsserver',
-  \'coc-json',
-  \'coc-go',
-  \'coc-yaml',
-  \'coc-prettier',
-  \'coc-tsserver',
-  \'coc-lists',
-  \'coc-css',
-  \'coc-prettier',
-  \'coc-rust-analyzer',
-  \'coc-vimtex',
-  \'coc-yank',
-  \'coc-flutter',
-  \'coc-eslint',
-  \'coc-tailwindcss',
-  \'coc-markdownlint',
-  \'coc-html',
-  \'coc-emmet',
-  \'coc-toml',
-  \'coc-perl',
-  \'coc-python' ]
 
 let g:sql_type_default = 'pgsql'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -175,6 +156,8 @@ set completeopt+=preview
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+autocmd BufRead,BufNewFile *.hcl set filetype=terraform
+
 augroup Quickfix
   autocmd!
   autocmd FileType qf setlocal norelativenumber
@@ -189,6 +172,7 @@ augroup END
 augroup BreakLine
   autocmd!
   autocmd FileType tex setlocal textwidth=100
+  autocmd FileType markdown setlocal textwidth=80
   autocmd FileType tex setlocal wrap linebreak nolist
 augroup END
 
@@ -295,6 +279,8 @@ set splitbelow
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set lazyredraw
 
+let g:highlightedyank_highlight_duration = 200
+
 " This enables us to undo files even if you exit Vim.
 if has('persistent_undo')
   set undofile
@@ -312,3 +298,189 @@ let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_default_mapping=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#2B2B2B guifg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#1B1D1E guifg=0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => lua
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua <<EOF
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[k', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']k', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<leader>Q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting_seq_sync(nil, 1000)<CR>', opts)
+
+end
+
+-- Add additional capabilities supported by nvim-cmp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown', 'plaintext' }
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.preselectSupport = true
+capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  },
+}
+
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'perlpls' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+
+-- nvim-cmp setup
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      -- You must install `vim-vsnip` if you use the following as-is.
+      vim.fn['vsnip#anonymous'](args.body)
+    end
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' }),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+  },
+}
+
+nvim_lsp.diagnosticls.setup{
+  on_attach=on_attach,
+  filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'css', 'scss', 'markdown', 'pandoc' },
+  init_options = {
+    linters = {
+      eslint = {
+        command = 'eslint_d',
+        rootPatterns = {
+          '.eslintrc',
+          '.eslintrc.json',
+          '.eslintrc.cjs',
+          '.eslintrc.js',
+          '.eslintrc.yml',
+          '.eslintrc.yaml',
+          'package.json',
+          '.git'
+        },
+        debounce = 100,
+        args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
+        sourceName = 'eslint_d',
+        parseJson = {
+          errorsRoot = '[0].messages',
+          line = 'line',
+          column = 'column',
+          endLine = 'endLine',
+          endColumn = 'endColumn',
+          message = '${message} [${ruleId}]',
+          security = 'severity'
+        },
+        securities = {
+          [2] = 'error',
+          [1] = 'warning'
+        }
+      },
+      markdownlint = {
+        command = 'markdownlint',
+        rootPatterns = { '.git' },
+        isStderr = true,
+        debounce = 100,
+        args = { '--stdin' },
+        offsetLine = 0,
+        offsetColumn = 0,
+        sourceName = 'markdownlint',
+        securities = {
+          undefined = 'hint'
+        },
+        formatLines = 1,
+        formatPattern = {
+          '^.*:(\\d+)\\s+(.*)$',
+          {
+            line = 1,
+            column = -1,
+            message = 2,
+          }
+        }
+      }
+    },
+    filetypes = {
+      javascript = 'eslint',
+      javascriptreact = 'eslint',
+      typescript = 'eslint',
+      typescriptreact = 'eslint',
+      markdown = 'markdownlint',
+      pandoc = 'markdownlint'
+    },
+    formatters = {
+      eslint = {
+        command = "eslint_d",
+        args = { "--stdin", "--fix-to-stdout", "--stdin-filename", "%filepath" },
+        isStdout = true,
+        doesWriteToFile = false,
+      },
+      prettier = {
+        command = 'prettier',
+        args = { '--stdin-filepath', '%filename' },
+        rootPatterns = { 'package.json', '.git' },
+      }
+    },
+    formatFiletypes = {
+       css = 'prettier',
+       javascript = 'eslint',
+       javascriptreact = 'eslint',
+       json = 'prettier',
+       scss = 'prettier',
+       typescript = 'eslint',
+       typescriptreact = 'eslint'
+    }
+  }
+}
+
+EOF

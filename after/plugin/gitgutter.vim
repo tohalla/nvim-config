@@ -7,7 +7,5 @@ try
   autocmd ColorScheme * hi GitGutterChange guifg=darkyellow
   autocmd ColorScheme * hi GitGutterDelete guifg=red
   autocmd ColorScheme * hi GitGutterChangeDelete guifg=darkyellow
-  autocmd ColorScheme * hi CocErrorSign guifg=red
-  autocmd ColorScheme * hi CocWarningSign guifg=yellow
 catch
 endtry

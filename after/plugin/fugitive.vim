@@ -1,11 +1,11 @@
 try
-  nnoremap <silent> <leader>gs :Gstatus<cr>
+  nnoremap <silent> <leader>gs :Git<cr>
   nnoremap <silent> <leader>gc :Gcommit<cr>
   nnoremap <silent> <leader>gm :Git mergetool<cr>
   nnoremap <silent> <leader>gM :Gmerge<cr>
   nnoremap <silent> <leader>gl :0Gclog<cr>
   nnoremap <silent> <leader>gL :Gclog %<cr>
-  nnoremap <silent> <leader>gb :Gblame<cr>
+  nnoremap <silent> <leader>gb :Git blame<cr>
   nnoremap <silent> <leader>gw :Gwrite<cr>
   nnoremap <silent> <leader>g<BS> :Gread<cr>
   nnoremap <silent> <leader>gg :Gdiffsplit!<cr>
