@@ -122,11 +122,12 @@ Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlig
 Plug 'cespare/vim-toml'
 Plug 'robertbasic/vim-hugo-helper'
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
 Plug 'heavenshell/vim-jsdoc'
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -299,20 +300,52 @@ let g:indent_guides_default_mapping=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#2B2B2B guifg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#1B1D1E guifg=0
 
+let g:coq_settings = {
+  \'auto_start': 'shut-up',
+  \'clients': { 'buffers': { 'enabled': v:false, }, 'snippets': { 'enabled': v:false }, 'tmux': { 'enabled': v:false } },
+  \'display': {'pum': { 'fast_close': v:false, }, },
+  \'match': {'look_ahead': 0, },
+  \'weights': { 'recency': 0.6, 'proximity': 0.3, },
+  \}
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lua
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua <<EOF
 local nvim_lsp = require('lspconfig')
+local coq = require "coq"
+local null_ls = require("null-ls")
+null_ls.config {
+  autostart = true,
+  diagnostics_format = "[#{c}] #{m} (#{s})",
+  sources = {
+    null_ls.builtins.formatting.black,
+    null_ls.builtins.formatting.clang_format,
+    null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.gofmt,
+    null_ls.builtins.formatting.goimports,
+    null_ls.builtins.formatting.golines,
+    null_ls.builtins.formatting.markdownlint,
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.rustfmt,
+    null_ls.builtins.formatting.terraform_fmt,
+
+    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.markdownlint,
+    null_ls.builtins.diagnostics.write_good,
+    null_ls.builtins.diagnostics.golangci_lint,
+    null_ls.builtins.diagnostics.yamllint,
+
+    null_ls.builtins.code_actions.eslint_d,
+  }
+}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -336,151 +369,12 @@ local on_attach = function(client, bufnr)
 end
 
 -- Add additional capabilities supported by nvim-cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown', 'plaintext' }
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.preselectSupport = true
-capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  },
-}
 
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'perlpls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'null-ls' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities({
     on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
+  }))
 end
-
--- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      -- You must install `vim-vsnip` if you use the following as-is.
-      vim.fn['vsnip#anonymous'](args.body)
-    end
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' }),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'buffer' },
-  },
-}
-
-nvim_lsp.diagnosticls.setup{
-  on_attach=on_attach,
-  filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'css', 'scss', 'markdown', 'pandoc' },
-  init_options = {
-    linters = {
-      eslint = {
-        command = 'eslint_d',
-        rootPatterns = {
-          '.eslintrc',
-          '.eslintrc.json',
-          '.eslintrc.cjs',
-          '.eslintrc.js',
-          '.eslintrc.yml',
-          '.eslintrc.yaml',
-          'package.json',
-          '.git'
-        },
-        debounce = 100,
-        args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
-        sourceName = 'eslint_d',
-        parseJson = {
-          errorsRoot = '[0].messages',
-          line = 'line',
-          column = 'column',
-          endLine = 'endLine',
-          endColumn = 'endColumn',
-          message = '${message} [${ruleId}]',
-          security = 'severity'
-        },
-        securities = {
-          [2] = 'error',
-          [1] = 'warning'
-        }
-      },
-      markdownlint = {
-        command = 'markdownlint',
-        rootPatterns = { '.git' },
-        isStderr = true,
-        debounce = 100,
-        args = { '--stdin' },
-        offsetLine = 0,
-        offsetColumn = 0,
-        sourceName = 'markdownlint',
-        securities = {
-          undefined = 'hint'
-        },
-        formatLines = 1,
-        formatPattern = {
-          '^.*:(\\d+)\\s+(.*)$',
-          {
-            line = 1,
-            column = -1,
-            message = 2,
-          }
-        }
-      }
-    },
-    filetypes = {
-      javascript = 'eslint',
-      javascriptreact = 'eslint',
-      typescript = 'eslint',
-      typescriptreact = 'eslint',
-      markdown = 'markdownlint',
-      pandoc = 'markdownlint'
-    },
-    formatters = {
-      eslint = {
-        command = "eslint_d",
-        args = { "--stdin", "--fix-to-stdout", "--stdin-filename", "%filepath" },
-        isStdout = true,
-        doesWriteToFile = false,
-      },
-      prettier = {
-        command = 'prettier',
-        args = { '--stdin-filepath', '%filename' },
-        rootPatterns = { 'package.json', '.git' },
-      }
-    },
-    formatFiletypes = {
-       css = 'prettier',
-       javascript = 'eslint',
-       javascriptreact = 'eslint',
-       json = 'prettier',
-       scss = 'prettier',
-       typescript = 'eslint',
-       typescriptreact = 'eslint'
-    }
-  }
-}
 
 EOF
