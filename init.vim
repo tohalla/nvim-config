@@ -297,6 +297,7 @@ let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'gitmessengerpopup'
 let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_default_mapping=0
+hi Pmenu ctermfg=223 ctermbg=239 guifg=#ebdbb2 guibg=#000000
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#2B2B2B guifg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#1B1D1E guifg=0
 
