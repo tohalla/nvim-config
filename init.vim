@@ -91,6 +91,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'machakann/vim-highlightedyank'
+Plug 'RRethy/vim-illuminate'
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -291,6 +292,7 @@ endif
 let g:tex_flavor = 'latex'
 
 let g:gruvbox_contrast_dark = 'hard'
+let g:Illuminate_delay = 300
 set termguicolors
 colorscheme gruvbox
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'gitmessengerpopup', 'godoc']
@@ -354,6 +356,8 @@ null_ls.config {
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  require 'illuminate'.on_attach(client)
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
