@@ -86,8 +86,8 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 
 " UI
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'majutsushi/tagbar'
@@ -108,9 +108,11 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 
 " Colorschemes
-Plug 'morhetz/gruvbox'
+Plug 'rktjmp/lush.nvim'
+Plug 'ellisonleao/gruvbox.nvim'
 
 " Language support
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'sheerun/vim-polyglot'
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go'
@@ -313,6 +315,13 @@ let g:coq_settings = {
 " => lua
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua <<EOF
+require'lualine'.setup{
+  options = {
+    component_separators = { left = '|', right = '|'},
+    section_separators = { left = '', right = ''},
+  },
+}
+
 local nvim_lsp = require('lspconfig')
 local coq = require "coq"
 local null_ls = require("null-ls")
