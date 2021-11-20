@@ -90,7 +90,6 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'majutsushi/tagbar'
 Plug 'machakann/vim-highlightedyank'
 
 " Linting/formatting etc
@@ -133,7 +132,6 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
 Plug 'heavenshell/vim-jsdoc'
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
-Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
 Plug 'ludovicchabant/vim-gutentags'
