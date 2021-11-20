@@ -92,6 +92,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'machakann/vim-highlightedyank'
 Plug 'RRethy/vim-illuminate'
+Plug 'akinsho/bufferline.nvim'
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -319,6 +320,14 @@ require'lualine'.setup{
   options = {
     component_separators = { left = '|', right = '|'},
     section_separators = { left = '', right = ''},
+  },
+}
+require("bufferline").setup{
+  options = {
+    tab_size = 4,
+    show_buffer_icons = false,
+    show_buffer_close_icons = false,
+    show_close_icon = false,
   },
 }
 
