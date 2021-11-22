@@ -112,7 +112,7 @@ Plug 'tpope/vim-eunuch'
 
 " Colorschemes
 Plug 'rktjmp/lush.nvim'
-Plug 'ellisonleao/gruvbox.nvim'
+Plug 'sainnhe/gruvbox-material'
 
 " Language support
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -294,16 +294,31 @@ endif
 
 let g:tex_flavor = 'latex'
 
-let g:gruvbox_contrast_dark = 'hard'
-let g:Illuminate_delay = 300
 set termguicolors
-colorscheme gruvbox
+
+let g:Illuminate_delay = 300
+
+let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_palette = 'mix'
+let g:gruvbox_material_ui_contrast = 'high'
+let g:gruvbox_material_statusline_style = 'mix'
+
+function! s:gruvbox_material_custom() abort
+  highlight! IndentGuidesOdd  guibg=#2B2B2B guifg=0
+  highlight! IndentGuidesEven guibg=#1B1D1E guifg=0
+  highlight! Pmenu guifg=#EBDBB2 guibg=#000000
+  highlight! NormalFloat guifg=#EBDBB2 guibg=#000000
+endfunction
+
+augroup GruvboxMaterialCustom
+  autocmd!
+  autocmd ColorScheme gruvbox-material call s:gruvbox_material_custom()
+augroup END
+
+colorscheme gruvbox-material
 let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_default_mapping=0
-hi Pmenu ctermfg=223 ctermbg=239 guifg=#ebdbb2 guibg=#000000
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#2B2B2B guifg=0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#1B1D1E guifg=0
 
 let g:nvim_tree_show_icons = {
   \ 'git': 0,
@@ -335,7 +350,7 @@ require("bufferline").setup{
     show_buffer_icons = false,
     show_buffer_close_icons = false,
     show_close_icon = false,
-    indicator_icon = '',
+    indicator_icon = '|',
     max_name_length = 24,
   },
 }
