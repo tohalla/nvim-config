@@ -95,6 +95,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'machakann/vim-highlightedyank'
 Plug 'RRethy/vim-illuminate'
 Plug 'akinsho/bufferline.nvim'
+Plug 'ray-x/lsp_signature.nvim'
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -355,6 +356,7 @@ require("bufferline").setup{
   },
 }
 require'nvim-tree'.setup { }
+require "lsp_signature".setup()
 
 local nvim_lsp = require('lspconfig')
 local coq = require "coq"
