@@ -40,7 +40,7 @@ nnoremap Y y$
 nnoremap j gj
 nnoremap k gk
 
-nnoremap <silent> <leader>l :Buffer<cr>
+nnoremap <silent> <leader>l :Buffers<cr>
 nnoremap <silent> <leader>p :Files<cr>
 nnoremap <silent> <leader>t :BTags<cr>
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
