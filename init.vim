@@ -328,6 +328,8 @@ require("bufferline").setup{
     show_buffer_icons = false,
     show_buffer_close_icons = false,
     show_close_icon = false,
+    indicator_icon = '',
+    max_name_length = 24,
   },
 }
 
