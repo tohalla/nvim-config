@@ -46,6 +46,8 @@ nnoremap <silent> <leader>t :BTags<cr>
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 nnoremap <silent>  :Ag<cr>
 
+nnoremap <silent> <C-n> :NvimTreeFindFile<CR>
+
 " Keep search results at the center of screen
 nnoremap n nzz
 nnoremap N Nzz
@@ -88,7 +90,7 @@ Plug 'tpope/vim-unimpaired'
 " UI
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'scrooloose/nerdtree'
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'machakann/vim-highlightedyank'
 Plug 'RRethy/vim-illuminate'
@@ -296,13 +298,18 @@ let g:gruvbox_contrast_dark = 'hard'
 let g:Illuminate_delay = 300
 set termguicolors
 colorscheme gruvbox
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'gitmessengerpopup', 'godoc']
 let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_default_mapping=0
 hi Pmenu ctermfg=223 ctermbg=239 guifg=#ebdbb2 guibg=#000000
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#2B2B2B guifg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#1B1D1E guifg=0
+
+let g:nvim_tree_show_icons = {
+  \ 'git': 0,
+  \ 'folders': 1,
+  \ 'folder_arrows': 1,
+  \ }
 
 let g:coq_settings = {
   \'auto_start': 'shut-up',
@@ -332,6 +339,7 @@ require("bufferline").setup{
     max_name_length = 24,
   },
 }
+require'nvim-tree'.setup { }
 
 local nvim_lsp = require('lspconfig')
 local coq = require "coq"
