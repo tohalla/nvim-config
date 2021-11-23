@@ -91,7 +91,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'RRethy/vim-illuminate'
 Plug 'akinsho/bufferline.nvim'
@@ -358,6 +358,13 @@ require("bufferline").setup{
 }
 require'nvim-tree'.setup { }
 require "lsp_signature".setup()
+
+require("indent_blankline").setup {
+  char = "",
+  char_highlight_list = { "IndentGuidesOdd", "IndentGuidesEven", },
+  space_char_highlight_list = { "IndentGuidesOdd", "IndentGuidesEven", },
+  show_trailing_blankline_indent = false,
+}
 
 local nvim_lsp = require('lspconfig')
 local coq = require "coq"
