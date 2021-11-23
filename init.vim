@@ -96,6 +96,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'RRethy/vim-illuminate'
 Plug 'akinsho/bufferline.nvim'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'tversteeg/registers.nvim'
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
