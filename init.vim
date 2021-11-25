@@ -304,11 +304,13 @@ let g:gruvbox_material_background = 'hard'
 let g:gruvbox_material_palette = 'mix'
 let g:gruvbox_material_ui_contrast = 'high'
 let g:gruvbox_material_statusline_style = 'mix'
+let g:gruvbox_material_current_word = 'bold'
 
 function! s:gruvbox_material_custom() abort
-  highlight! IndentGuidesOdd  guibg=#2B2B2B guifg=0
-  highlight! IndentGuidesEven guibg=#1B1D1E guifg=0
+  highlight! IndentGuidesOdd  guibg=#2B2B2B guifg=#999999
+  highlight! IndentGuidesEven guibg=#1B1D1E guifg=#999999
   highlight! Pmenu guifg=#EBDBB2 guibg=#000000
+  highlight! Visual guibg=#665544
   highlight! NormalFloat guifg=#EBDBB2 guibg=#000000
 endfunction
 
