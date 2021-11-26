@@ -346,8 +346,11 @@ require'lualine'.setup{
   options = {
     component_separators = { left = '|', right = '|'},
     section_separators = { left = '', right = ''},
+    show_filename_only = false,
+    path = 1,
   },
 }
+
 require("bufferline").setup{
   options = {
     tab_size = 4,
