@@ -312,6 +312,14 @@ function! s:gruvbox_material_custom() abort
   highlight! Pmenu guifg=#EBDBB2 guibg=#000000
   highlight! Visual guibg=#665544
   highlight! NormalFloat guifg=#EBDBB2 guibg=#000000
+  highlight! VirtualTextError guifg=#F2594B
+  highlight! VirtualTextWarning guifg=#E9B143
+  highlight! VirtualTextHint guifg=gray
+  highlight! ErrorFloat guibg=#000000
+  highlight! InfoFloat guibg=#000000
+  highlight! HintFloat guibg=#000000
+  highlight! WarningFloat guibg=#000000
+  highlight! HighlightedyankRegion gui=reverse
 endfunction
 
 augroup GruvboxMaterialCustom
