@@ -125,13 +125,11 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'lervag/vimtex'
 Plug 'fisadev/vim-isort'
 Plug 'mattn/emmet-vim'
-Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'cespare/vim-toml'
 Plug 'robertbasic/vim-hugo-helper'
 Plug 'neovim/nvim-lspconfig'
 
 Plug 'nvim-lua/plenary.nvim'
-Plug 'jose-elias-alvarez/null-ls.nvim'
 
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
@@ -340,10 +338,8 @@ let g:nvim_tree_show_icons = {
 
 let g:coq_settings = {
   \'auto_start': 'shut-up',
-  \'clients': { 'buffers': { 'enabled': v:false, }, 'snippets': { 'enabled': v:false }, 'tmux': { 'enabled': v:false } },
+  \'clients': { 'lsp': { 'weight_adjust': 0.5, 'resolve_timeout': 0.1, }, 'buffers': { 'enabled': v:false }, 'tmux': { 'enabled': v:false } },
   \'display': {'pum': { 'fast_close': v:false, }, },
-  \'match': {'look_ahead': 0, },
-  \'weights': { 'recency': 0.6, 'proximity': 0.3, },
   \}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -370,7 +366,9 @@ require("bufferline").setup{
   },
 }
 require'nvim-tree'.setup { }
-require "lsp_signature".setup()
+require "lsp_signature".setup({
+  zindex = 10,
+})
 
 require("indent_blankline").setup {
   char = "",
@@ -381,32 +379,6 @@ require("indent_blankline").setup {
 
 local nvim_lsp = require('lspconfig')
 local coq = require "coq"
-local null_ls = require("null-ls")
-null_ls.config {
-  autostart = true,
-  diagnostics_format = "[#{c}] #{m} (#{s})",
-  sources = {
-    null_ls.builtins.formatting.black,
-    null_ls.builtins.formatting.clang_format,
-    null_ls.builtins.formatting.eslint_d,
-    null_ls.builtins.formatting.gofmt,
-    null_ls.builtins.formatting.goimports,
-    null_ls.builtins.formatting.golines,
-    null_ls.builtins.formatting.markdownlint,
-    null_ls.builtins.formatting.prettier,
-    null_ls.builtins.formatting.rustfmt,
-    null_ls.builtins.formatting.terraform_fmt,
-
-    null_ls.builtins.diagnostics.eslint_d,
-    null_ls.builtins.diagnostics.flake8,
-    null_ls.builtins.diagnostics.markdownlint,
-    null_ls.builtins.diagnostics.write_good,
-    null_ls.builtins.diagnostics.golangci_lint,
-    null_ls.builtins.diagnostics.yamllint,
-
-    null_ls.builtins.code_actions.eslint_d,
-  }
-}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -429,20 +401,20 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[k', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']k', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<leader>Q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[k', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']k', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<leader>Q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting_seq_sync(nil, 1000)<CR>', opts)
-
 end
 
--- Add additional capabilities supported by nvim-cmp
-
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'null-ls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'eslint' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities({
     on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
   }))
 end
 
