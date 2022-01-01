@@ -79,7 +79,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'godlygeek/tabular'
-Plug 'justinmk/vim-sneak'
+Plug 'ggandor/lightspeed.nvim'
 Plug 'tpope/vim-repeat'
 Plug 'mbbill/undotree'
 
@@ -309,6 +309,7 @@ function! s:gruvbox_material_custom() abort
   highlight! IndentGuidesEven guibg=#1B1D1E guifg=#999999
   highlight! Pmenu guifg=#EBDBB2 guibg=#000000
   highlight! Visual guibg=#665544
+  highlight! LightspeedPendingOpArea guibg=#665544
   highlight! NormalFloat guifg=#EBDBB2 guibg=#000000
   highlight! VirtualTextError guifg=#F2594B
   highlight! VirtualTextWarning guifg=#E9B143
