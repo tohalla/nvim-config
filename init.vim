@@ -369,6 +369,12 @@ require("bufferline").setup{
 require'nvim-tree'.setup { }
 require "lsp_signature".setup({
   zindex = 10,
+  max_height = 6,
+  padding = ' ',
+  hint_enable = false,
+  handler_opts = {
+    border = "none"
+  },
 })
 
 require("indent_blankline").setup {
