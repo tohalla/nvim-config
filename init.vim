@@ -97,6 +97,9 @@ Plug 'RRethy/vim-illuminate'
 Plug 'akinsho/bufferline.nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'tversteeg/registers.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'folke/todo-comments.nvim'
+Plug 'bennypowers/nvim-regexplainer'
 
 " Linting/formatting etc
 Plug 'editorconfig/editorconfig-vim'
@@ -122,13 +125,13 @@ Plug 'sheerun/vim-polyglot'
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'lervag/vimtex'
 Plug 'fisadev/vim-isort'
 Plug 'mattn/emmet-vim'
 Plug 'cespare/vim-toml'
 Plug 'robertbasic/vim-hugo-helper'
 Plug 'neovim/nvim-lspconfig'
 
+Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-lua/plenary.nvim'
 
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
@@ -176,9 +179,7 @@ augroup END
 
 augroup BreakLine
   autocmd!
-  autocmd FileType tex setlocal textwidth=100
-  autocmd FileType markdown setlocal textwidth=80
-  autocmd FileType tex setlocal wrap linebreak nolist
+  autocmd FileType markdown setlocal textwidth=120
 augroup END
 
 " close loclist when buffer is closed
@@ -266,7 +267,6 @@ set novisualbell
 set list
 set listchars=tab:\ \ ,extends:›,precedes:‹,nbsp:·,trail:·
 
-let g:latex_viewer='mupdf'
 set foldmethod=syntax
 set nofoldenable
 
@@ -291,8 +291,6 @@ if has('persistent_undo')
   set undofile
   set undodir=~/.config/nvim/tmp/undo//
 endif
-
-let g:tex_flavor = 'latex'
 
 set termguicolors
 
@@ -339,20 +337,30 @@ let g:nvim_tree_show_icons = {
 
 let g:coq_settings = {
   \'auto_start': 'shut-up',
-  \'clients': { 'lsp': { 'weight_adjust': 0.5, 'resolve_timeout': 0.1, }, 'buffers': { 'enabled': v:false }, 'tmux': { 'enabled': v:false } },
+  \'clients': { 'lsp': { 'weight_adjust': 0.5, 'resolve_timeout': 0.3, }, 'tmux': { 'enabled': v:false } },
   \'display': {'pum': { 'fast_close': v:false, }, },
   \}
+
+let g:vim_svelte_plugin_use_typescript = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lua
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua <<EOF
+local current_signature = function(width)
+  local sig = require("lsp_signature").status_line(width)
+  return sig.label .. " " .. sig.hint
+end
+
 require'lualine'.setup{
   options = {
     component_separators = { left = '|', right = '|'},
     section_separators = { left = '', right = ''},
     show_filename_only = false,
     path = 1,
+  },
+  sections = {
+    lualine_c = {'filename', current_signature},
   },
 }
 
@@ -367,15 +375,23 @@ require("bufferline").setup{
   },
 }
 require'nvim-tree'.setup { }
-require "lsp_signature".setup({
-  zindex = 10,
-  max_height = 6,
-  padding = ' ',
-  hint_enable = false,
-  handler_opts = {
-    border = "none"
+require'colorizer'.setup()
+require'regexplainer'.setup { }
+
+require("todo-comments").setup {
+  signs = false,
+  highlight = {
+    keyword = "fg",
+    after = ""
   },
-})
+  colors = {
+    error = { "DiagnosticError", "ErrorMsg" },
+    warning = { "DiagnosticWarn", "WarningMsg" },
+    info = { "DiagnosticInfo", "orange" },
+    hint = { "DiagnosticHint", "comment" },
+    default = { "Identifier", "aqua" },
+  },
+}
 
 require("indent_blankline").setup {
   char = "",
@@ -411,11 +427,11 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[k', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']k', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<leader>Q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting_seq_sync(nil, 1000)<CR>', opts)
+  buf_set_keymap('n', '<leader>Q', '<cmd>lua vim.lsp.diagnostic.set_qflist()<CR>', opts)
+  buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'eslint' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'gopls', 'jsonls', 'golangci_lint_ls', 'sqls', 'cssls', 'tailwindcss', 'svelte' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities({
     on_attach = on_attach,
@@ -424,5 +440,12 @@ for _, lsp in ipairs(servers) do
     }
   }))
 end
+nvim_lsp.eslint.setup(coq.lsp_ensure_capabilities({
+  on_attach = on_attach,
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte" },
+  flags = {
+    debounce_text_changes = 150,
+  }
+}))
 
 EOF
