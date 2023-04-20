@@ -42,7 +42,7 @@ return {
     keys = {
       { "<leader>l", "<cmd>Telescope buffers<cr>",              silent = true },
       { "<leader>p", "<cmd>Telescope find_files<cr>",           silent = true },
-      { "<leader>t", "<cmd>Telescope lsp_document_symbols<cr>", silent = true },
+      { "<leader>s", "<cmd>Telescope lsp_document_symbols<cr>", silent = true },
       { "",        "<cmd>Telescope live_grep<cr>",            silent = true },
     },
   },
@@ -54,15 +54,18 @@ return {
   },
   {
     'nvim-lualine/lualine.nvim',
+    dependencies = {
+      {
+        "SmiteshP/nvim-navic",
+        opts = {
+          lsp = {
+            auto_attach = true
+          }
+        },
+      },
+    },
     config = function()
-      local current_signature = function()
-        local signature = require("lsp_signature").status_line()
-        if signature == nil then
-          return ""
-        end
-        return signature.label .. " " .. signature.hint
-      end
-
+      local navic = require("nvim-navic")
       require("lualine").setup({
         options = {
           component_separators = { left = '|', right = '|' },
@@ -71,9 +74,18 @@ return {
           path = 1,
         },
         sections = {
-          lualine_c = { 'filename', current_signature },
+          lualine_c = {
+            'filename',
+            {
+              function()
+                return navic.get_location()
+              end,
+              cond = function()
+                return navic.is_available()
+              end
+            },
+          },
         },
-        extensions = { 'fzf', 'lazy', 'nvim-tree', 'fugitive' }
       })
     end,
   },
@@ -115,6 +127,12 @@ return {
     end,
   },
   {
+    "preservim/vim-markdown",
+    config = function()
+      vim.g.vim_markdown_folding_disabled = 1
+    end,
+  },
+  {
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
   },
@@ -132,7 +150,7 @@ return {
   },
   {
     "kevinhwang91/nvim-ufo",
-    requires = 'kevinhwang91/promise-async',
+    dependencies = { 'kevinhwang91/promise-async' },
   },
   "ggandor/lightspeed.nvim",
   "tpope/vim-abolish",
@@ -142,4 +160,30 @@ return {
   "tpope/vim-surround",
   "tpope/vim-unimpaired",
   "wellle/targets.vim",
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/neotest-go",
+      "marilari88/neotest-vitest",
+      "rouge8/neotest-rust",
+      "antoinemadec/FixCursorHold.nvim",
+    },
+    keys = {
+      { "]s",         "<cmd>lua require('neotest').jump.next({ status = 'failed' })<CR>", silent = true, noremap = true },
+      { "[s",         "<cmd>lua require('neotest').jump.prev({ status = 'failed' })<CR>", silent = true, noremap = true },
+      { "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",      silent = true, noremap = true },
+      { "<leader>tt", "<cmd>lua require('neotest').run.run()<CR>",                        silent = true, noremap = true },
+      { "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>",                 silent = true, noremap = true },
+      { "<leader>to", "<cmd>lua require('neotest').output.open({ enter = true })<CR>",    silent = true, noremap = true },
+    },
+    config = function()
+      require("neotest").setup({
+        adapters = {
+          require("neotest-go"),
+          require("neotest-vitest"),
+          require("neotest-rust"),
+        },
+      })
+    end
+  }
 }
