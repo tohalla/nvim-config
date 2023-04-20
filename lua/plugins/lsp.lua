@@ -3,7 +3,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  vim.keymap.set("n", "g'", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   vim.keymap.set("n", "<leader>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   vim.keymap.set("n", "gtd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
   vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
@@ -51,8 +51,11 @@ return {
         tailwindcss = {},
         svelte = {},
         dockerls = {},
+        marksman = {},
+        stylelint_lsp = {},
         rust_analyzer = {},
         eslint = {
+          format = false,
           filetypes = {
             "javascript",
             "javascriptreact",
@@ -215,6 +218,32 @@ return {
           capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
         },
       })
+    end,
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+        require("null-ls").setup({
+        on_attach = function(client, bufnr)
+          if client.supports_method("textDocument/formatting") then
+            vim.keymap.set("n", "<Leader>f", function()
+              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+            end, { buffer = bufnr, desc = "[lsp] format" })
+          end
+
+          if client.supports_method("textDocument/rangeFormatting") then
+            vim.keymap.set("x", "<Leader>f", function()
+              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+            end, { buffer = bufnr, desc = "[lsp] format" })
+          end
+        end,
+      })
+    end,
+  },
+  {
+    "MunifTanjim/prettier.nvim",
+    config = function()
+      require("prettier").setup()
     end,
   },
 }
