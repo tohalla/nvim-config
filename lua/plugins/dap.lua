@@ -6,12 +6,6 @@ return {
         "jay-babu/mason-nvim-dap.nvim",
         dependencies = { "nvim-dap" },
         cmd = { "DapInstall", "DapUninstall" },
-        config = function()
-          require("mason").setup()
-          require("mason-nvim-dap").setup({
-            automatic_setup = true,
-          })
-        end,
       },
       {
         "rcarriga/nvim-dap-ui",
@@ -28,7 +22,11 @@ return {
       }
     },
     config = function()
-      require("mason-nvim-dap").setup({ ensure_installed = { "chrome" } })
+      require("mason-nvim-dap").setup({
+        automatic_setup = true,
+        ensure_installed = { "chrome", "node2" },
+        handlers = {}
+      })
       local dap = require("dap")
       local chrome = {
         type = "chrome",
@@ -40,19 +38,17 @@ return {
         port = 9222,
         webRoot = "${workspaceFolder}"
       }
+      local node = {
+        name = 'Attach to process',
+        type = 'node2',
+        request = 'attach',
+        processId = require 'dap.utils'.pick_process,
+      }
       for _, v in ipairs({ "typescriptreact", "javascriptreact", "svelte" }) do
-        dap.configurations[v] = { chrome }
+        dap.configurations[v] = { chrome, node }
       end
       for _, v in ipairs({ "typescript", "javascript" }) do
-        dap.configurations[v] = {
-          chrome,
-          {
-            name = 'Attach to process',
-            type = 'node2',
-            request = 'attach',
-            processId = require 'dap.utils'.pick_process,
-          }
-        }
+        dap.configurations[v] = { chrome, node }
       end
     end,
     keys = {
@@ -60,7 +56,7 @@ return {
       { "<leader>dq",    "<cmd>lua require'dap'.terminate()<CR>" },
       { "<leader>dn",    "<cmd>lua require'dap'.next()<CR>" },
       { "<leader>d<bs>", "<cmd>lua require'dap'.clear_breakpoints()<CR>" },
-      { "<C-d>",         "<cmd>lua require'dap'.step_over()<CR>" },
+      { "<C-n>",         "<cmd>lua require'dap'.step_over()<CR>" },
       { "<leader>dd",    "<cmd>lua require'dap'.step_into()<CR>" },
       { "<leader>dD",    "<cmd>lua require'dap'.step_out()<CR>" },
       { "<leader>db",    "<cmd>lua require'dap'.toggle_breakpoint()<CR>" },
