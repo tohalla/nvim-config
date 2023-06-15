@@ -17,34 +17,40 @@ return {
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable "make" == 1, build = "make" },
     },
-    opts = {
-      defaults = {
-        layout_strategy = "vertical",
-        mappings = {
-          i = {
-            ["<C-k>"] = "move_selection_previous",
-            ["<C-j>"] = "move_selection_next",
-          },
-          n = {
-            ["<C-c>"] = "close"
-          },
-        },
-      },
-      pickers = {
-        find_files = {
-          find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
-        },
-        live_grep = {
-          additional_args = { "--hidden", "--glob", "!.git/*" },
-        },
-      },
-    },
     keys = {
       { "<leader>l", "<cmd>Telescope buffers<cr>",              silent = true },
       { "<leader>p", "<cmd>Telescope find_files<cr>",           silent = true },
       { "<leader>s", "<cmd>Telescope lsp_document_symbols<cr>", silent = true },
-      { "",        "<cmd>Telescope live_grep<cr>",            silent = true },
+      { "",         "<cmd>Telescope live_grep<cr>",            silent = true },
     },
+    config = function()
+      local telescope = require("telescope")
+      telescope.setup(
+        {
+          defaults = {
+            layout_strategy = "vertical",
+            mappings = {
+              i = {
+                ["<C-k>"] = "move_selection_previous",
+                ["<C-j>"] = "move_selection_next",
+              },
+              n = {
+                ["<C-c>"] = "close"
+              },
+            },
+          },
+          pickers = {
+            find_files = {
+              find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+            },
+            live_grep = {
+              additional_args = { "--hidden", "--glob", "!.git/*" },
+            },
+          },
+        }
+      )
+      telescope.load_extension("fzf")
+    end,
   },
   {
     "kevinhwang91/nvim-bqf",
