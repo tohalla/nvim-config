@@ -169,13 +169,14 @@ return {
           { name = "path",     priority = 250 },
         },
       })
-      cmp.setup.filetype("gitcommit", {
+      cmp.setup.filetype({"gitcommit", "octo"}, {
         mapping = mapping,
         sources = cmp.config.sources {
-          { name = "cmp_git" },
+          { name = "git" },
           { name = "buffer" },
         },
       })
+      require("cmp_git").setup()
     end,
   },
   {

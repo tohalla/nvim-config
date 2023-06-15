@@ -27,5 +27,14 @@ return {
     keys = {
       { "<C-b>", ":GitMessenger<cr>", silent = true, noremap = true },
     },
-  }
+  },
+  {
+    "pwntester/octo.nvim",
+    keys = {
+      { "<leader>gp", "<CMD>Octo pr list<CR>", silent = true, noremap = true },
+    },
+    config = function()
+      require("octo").setup()
+    end
+  },
 }
