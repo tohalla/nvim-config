@@ -111,14 +111,13 @@ return {
     end
   },
   {
-    "kyazdani42/nvim-tree.lua",
+    "stevearc/oil.nvim",
+    keys = { { "-", "<cmd>lua require('oil').open()<CR>" } },
     opts = {
-      filters = {
-        dotfiles = true,
+      skip_confirm_for_simple_edits = true,
+      view_options = {
+        show_hidden = true,
       },
-    },
-    keys = {
-      { "<C-n>", "<cmd>NvimTreeFindFile<cr>", silent = true },
     },
   },
   {
@@ -191,5 +190,5 @@ return {
         },
       })
     end
-  }
+  },
 }
