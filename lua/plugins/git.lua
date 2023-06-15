@@ -25,7 +25,7 @@ return {
   {
     "rhysd/git-messenger.vim",
     keys = {
-      { "<leader>G", ":GitMessenger<cr>", silent = true, noremap = true },
+      { "<C-b>", ":GitMessenger<cr>", silent = true, noremap = true },
     },
   }
 }
