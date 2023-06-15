@@ -209,4 +209,15 @@ return {
       })
     end
   },
+  {
+    'Wansmer/treesj',
+    keys = { { "<leader>j", "<cmd>TSJToggle<CR>", silent = true, noremap = true }, },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup({
+        use_default_keymaps = false,
+        max_join_length = 160,
+      })
+    end,
+  }
 }
