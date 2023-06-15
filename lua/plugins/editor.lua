@@ -59,7 +59,7 @@ return {
     },
   },
   {
-    'nvim-lualine/lualine.nvim',
+    "nvim-lualine/lualine.nvim",
     dependencies = {
       {
         "SmiteshP/nvim-navic",
@@ -81,7 +81,7 @@ return {
         },
         sections = {
           lualine_c = {
-            'filename',
+            "filename",
             {
               function()
                 return navic.get_location()
