@@ -13,7 +13,9 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "[k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
   vim.keymap.set("n", "]k", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
   vim.keymap.set("n", "<leader>Q", "<cmd>lua vim.lsp.diagnostic.set_qflist()<CR>", opts)
-  vim.keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
+  if client.supports_method("textDocument/formatting") then
+    vim.keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
+  end
 
   if client.server_capabilities.signatureHelpProvider then
     require("lsp_signature").on_attach({}, bufnr)
@@ -42,7 +44,6 @@ return {
           },
         },
         pyright = {},
-        tsserver = {},
         gopls = {},
         jsonls = {},
         golangci_lint_ls = {},
@@ -207,7 +208,6 @@ return {
         },
       },
       copilot_node_command = 'node',
-      server_opts_overrides = {},
     },
   },
   {
@@ -224,7 +224,7 @@ return {
   {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
-        require("null-ls").setup({
+      require("null-ls").setup({
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
             vim.keymap.set("n", "<Leader>f", function()
@@ -247,4 +247,12 @@ return {
       require("prettier").setup()
     end,
   },
+  {
+    "jose-elias-alvarez/typescript.nvim",
+    opts = {
+      server = {
+        on_attach = on_attach,
+      },
+    },
+  }
 }
