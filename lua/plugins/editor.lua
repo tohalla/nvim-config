@@ -60,18 +60,7 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = {
-      {
-        "SmiteshP/nvim-navic",
-        opts = {
-          lsp = {
-            auto_attach = true
-          }
-        },
-      },
-    },
     config = function()
-      local navic = require("nvim-navic")
       require("lualine").setup({
         options = {
           component_separators = { left = '|', right = '|' },
@@ -79,36 +68,8 @@ return {
           show_filename_only = false,
           path = 1,
         },
-        sections = {
-          lualine_c = {
-            "filename",
-            {
-              function()
-                return navic.get_location()
-              end,
-              cond = function()
-                return navic.is_available()
-              end
-            },
-          },
-        },
       })
     end,
-  },
-  {
-    "akinsho/bufferline.nvim",
-    config = function()
-      require("bufferline").setup({
-        options = {
-          tab_size = 4,
-          show_buffer_icons = false,
-          show_buffer_close_icons = false,
-          show_close_icon = false,
-          indicator = { style = "icon", icon = "|" },
-          max_name_length = 24,
-        },
-      })
-    end
   },
   {
     "stevearc/oil.nvim",
