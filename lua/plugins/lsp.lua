@@ -170,7 +170,7 @@ return {
           { name = "path",     priority = 250 },
         },
       })
-      cmp.setup.filetype({"gitcommit", "octo"}, {
+      cmp.setup.filetype({ "gitcommit", "octo" }, {
         mapping = mapping,
         sources = cmp.config.sources {
           { name = "git" },
