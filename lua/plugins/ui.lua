@@ -45,7 +45,14 @@ return {
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
-      require("colorizer").setup()
+      require("colorizer").setup({
+        "css",
+        "javascriptreact",
+        "typescriptreact",
+        "svelte",
+        "html",
+        "scss",
+      })
     end,
   },
   "kyazdani42/nvim-web-devicons",
