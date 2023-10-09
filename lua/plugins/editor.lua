@@ -94,6 +94,7 @@ return {
   },
   {
     "preservim/vim-markdown",
+    dependencies = { "godlygeek/tabular" },
     config = function()
       vim.g.vim_markdown_folding_disabled = 1
     end,
@@ -116,7 +117,7 @@ return {
   },
   {
     "kevinhwang91/nvim-ufo",
-    dependencies = { 'kevinhwang91/promise-async' },
+    dependencies = { "kevinhwang91/promise-async" },
   },
   {
     "ThePrimeagen/harpoon",
@@ -169,6 +170,17 @@ return {
         },
       })
     end
+  },
+  {
+    "simrat39/symbols-outline.nvim",
+    keys = {
+      { "<leader>`", "<cmd>SymbolsOutline<CR>" },
+    },
+    config = function()
+      require("symbols-outline").setup({
+        autofold_depth = 1,
+      })
+    end,
   },
   {
     'Wansmer/treesj',

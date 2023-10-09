@@ -15,8 +15,6 @@ vim.keymap.set("n", "<leader>co", "<cmd>copen<cr>", { silent = true, noremap = t
 -- buffers, windows, panes, tabs
 vim.keymap.set("n", "<leader>bd", "<cmd>BD<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-c>", "<cmd>bp<cr><cmd>bd #<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<C-k>", "<cmd>bn<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<C-j>", "<cmd>bp<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader><BS>", "<cmd>tabclose<cr>", { silent = true, noremap = true })
 
 -- Keep search results at the center of screen

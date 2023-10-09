@@ -36,11 +36,19 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
-    opts = {
-      char = "",
-      char_highlight_list = { "IndentGuidesOdd", "IndentGuidesEven" },
-      space_char_highlight_list = { "IndentGuidesOdd", "IndentGuidesEven" },
-    },
+    config = function()
+      require("ibl").setup({
+        indent = {
+          char = "",
+          highlight = { "IndentGuidesOdd", "IndentGuidesEven" },
+        },
+        whitespace = {
+          highlight = { "IndentGuidesOdd", "IndentGuidesEven" },
+          remove_blankline_trail = false,
+        },
+        scope = { enabled = false },
+      })
+    end,
   },
   {
     "norcalli/nvim-colorizer.lua",
