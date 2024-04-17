@@ -13,7 +13,6 @@ vim.keymap.set("n", "k", "gk", { noremap = true })
 vim.keymap.set("n", "<leader>cc", "<cmd>cclose<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>co", "<cmd>copen<cr>", { silent = true, noremap = true })
 -- buffers, windows, panes, tabs
-vim.keymap.set("n", "<leader>bd", "<cmd>BD<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-c>", "<cmd>bp<cr><cmd>bd #<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader><BS>", "<cmd>tabclose<cr>", { silent = true, noremap = true })
 
