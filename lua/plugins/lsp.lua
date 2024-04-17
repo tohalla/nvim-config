@@ -258,5 +258,6 @@ return {
         on_attach = on_attach,
       },
     },
-  }
+  },
+  { "sheerun/vim-polyglot" },
 }

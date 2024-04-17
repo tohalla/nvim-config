@@ -4,11 +4,13 @@ return {
     dependencies = {
       {
         "jay-babu/mason-nvim-dap.nvim",
+        "leoluz/nvim-dap-go",
         dependencies = { "nvim-dap" },
         cmd = { "DapInstall", "DapUninstall" },
       },
       {
         "rcarriga/nvim-dap-ui",
+        dependencies = { "nvim-neotest/nvim-nio" },
         keys = {
           { "<leader>dui", "<cmd>lua require'dapui'.toggle()<CR>" },
         },
@@ -17,13 +19,14 @@ return {
           dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
           dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
           dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
-          dapui.setup({})
+          dapui.setup()
         end,
       }
     },
     config = function()
+      require('dap-go').setup()
       require("mason-nvim-dap").setup({
-        automatic_setup = true,
+        automatic_installation = true,
         ensure_installed = { "chrome", "node2" },
         handlers = {}
       })

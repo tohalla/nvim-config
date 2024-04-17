@@ -109,7 +109,7 @@ return {
       bind = true,
       hint_enable = false,
       floating_window = false,
-      toggle_key = "jl",
+      toggle_key = "<leader><leader>",
       handler_opts = {
         border = "none",
       },
@@ -183,7 +183,7 @@ return {
     end,
   },
   {
-    'Wansmer/treesj',
+    "Wansmer/treesj",
     keys = { { "<leader>j", "<cmd>TSJToggle<CR>", silent = true, noremap = true }, },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
