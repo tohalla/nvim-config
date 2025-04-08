@@ -33,10 +33,3 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true, nowait = true })
   end,
 })
-
-vim.api.nvim_create_augroup("unlist_qf", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  group = "unlist_qf",
-  pattern = "qf",
-  callback = function() vim.opt_local.buflisted = false end,
-})

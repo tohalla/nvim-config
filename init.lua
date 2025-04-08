@@ -1,12 +1,16 @@
 vim.g.mapleader = " "
 
+local function load(src)
+  local status_ok, fault = pcall(require, src)
+  if not status_ok then vim.api.nvim_err_writeln("Failed loading " .. src .. "\n\n" .. fault) end
+end
+
 for _, src in ipairs {
   "aucmd",
   "mappings",
   "options",
 } do
-  local status_ok, fault = pcall(require, src)
-  if not status_ok then vim.api.nvim_err_writeln("Failed loading " .. src .. "\n\n" .. fault) end
+  load(src)
 end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -22,3 +26,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
+
+for _, src in ipairs {
+  "highlights",
+  "snippets",
+} do
+  load(src)
+end

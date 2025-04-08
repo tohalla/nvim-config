@@ -54,6 +54,10 @@ return {
   },
   {
     "kevinhwang91/nvim-bqf",
+    dependencies = {
+      'junegunn/fzf',
+    },
+    ft = "qf",
     opts = {
       auto_resize_height = true
     },
@@ -67,6 +71,16 @@ return {
           section_separators = { left = '', right = '' },
           show_filename_only = false,
           path = 1,
+        },
+        sections = {
+          lualine_z = {
+            'location',
+            {
+              'searchcount',
+              maxcount = 999,
+              timeout = 500,
+            },
+          },
         },
       })
     end,
@@ -105,6 +119,7 @@ return {
   },
   {
     "ray-x/lsp_signature.nvim",
+    lazy = true,
     opts = {
       bind = true,
       hint_enable = false,
@@ -141,7 +156,6 @@ return {
   "tpope/vim-abolish",
   "tpope/vim-commentary",
   "tpope/vim-repeat",
-  "tpope/vim-sleuth",
   "tpope/vim-surround",
   "tpope/vim-unimpaired",
   "wellle/targets.vim",
@@ -189,8 +203,29 @@ return {
     config = function()
       require('treesj').setup({
         use_default_keymaps = false,
-        max_join_length = 160,
+        max_join_length = 320,
       })
     end,
-  }
+  },
+  -- {
+  --   "yetone/avante.nvim",
+  --   event = "VeryLazy",
+  --   lazy = false,
+  --   version=false,
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --   },
+  --   opts = {
+  --     provider = "claude",
+  --     auto_suggestions_provider = "claude",
+  --     claude = {
+  --       endpoint = "https://api.anthropic.com",
+  --       model = "claude-3-5-sonnet-20241022",
+  --       temperature = 0,
+  --       max_tokens = 4096,
+  --     },
+  --   }
+  -- }
 }

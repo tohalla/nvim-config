@@ -7,15 +7,11 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   vim.keymap.set("n", "g;", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
   vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.keymap.set("n", "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>", opts)
-  vim.keymap.set("n", "[k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-  vim.keymap.set("n", "]k", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+  vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float(0, {scope='line'})<CR>", opts)
   vim.keymap.set("n", "<leader>Q", "<cmd>lua vim.lsp.diagnostic.set_qflist()<CR>", opts)
-  if client.supports_method("textDocument/formatting") then
-    vim.keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
-  end
+  vim.keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 
   if client.server_capabilities.signatureHelpProvider then
     require("lsp_signature").on_attach({}, bufnr)
@@ -27,7 +23,6 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
@@ -49,14 +44,46 @@ return {
         golangci_lint_ls = {},
         sqlls = {},
         cssls = {},
-        tailwindcss = {},
+        tailwindcss = {
+          filetypes = {
+            "astro",
+            "astro-markdown",
+            "ejs",
+            "gohtml",
+            "gohtmltmpl",
+            "html",
+            "markdown",
+            "mdx",
+            "mustache",
+            "css",
+            "less",
+            "postcss",
+            "sass",
+            "scss",
+            "stylus",
+            "sugarss",
+            "javascriptreact",
+            "typescriptreact",
+            "vue",
+            "svelte",
+          }
+
+        },
         svelte = {},
         dockerls = {},
-        marksman = {},
+        marksman = {
+          filetypes = {
+            "markdown",
+            "markdown.mdx",
+          },
+        },
         stylelint_lsp = {},
         rust_analyzer = {},
         eslint = {
-          format = false,
+          settings = {
+            format = false,
+            run = "onSave",
+          },
           filetypes = {
             "javascript",
             "javascriptreact",
@@ -71,14 +98,14 @@ return {
         },
       },
       setup = {
-        -- setup via simrat39/rust-tools.nvim
         rust_analyzer = function()
         end,
         ["*"] = function(server, opts)
           require("lspconfig")[server].setup(
             vim.tbl_deep_extend("force", {
               flags = {
-                debounce_text_changes = 150,
+                allow_incremental_sync = false,
+                debounce_text_changes = 250,
               },
               on_attach = on_attach,
               capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
@@ -110,7 +137,10 @@ return {
       end
       require("mason").setup()
       local mason_lspconfig = require("mason-lspconfig")
-      mason_lspconfig.setup({ ensure_installed = ensure_installed })
+      mason_lspconfig.setup({
+        automatic_installation = true,
+        ensure_installed = ensure_installed,
+      })
       mason_lspconfig.setup_handlers({ setup })
     end,
   },
@@ -129,14 +159,14 @@ return {
     config = function()
       local cmp = require("cmp")
       local mapping = {
-        ['<C-j>'] = function(fallback)
+        ['<C-n>'] = function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           else
             fallback()
           end
         end,
-        ['<C-k>'] = function(fallback)
+        ['<C-p>'] = function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
           else
@@ -147,12 +177,10 @@ return {
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
+        ['<C-y>'] = cmp.mapping.confirm(),
         ['<CR>'] = cmp.mapping.confirm(),
       }
       cmp.setup({
-        completion = {
-          completeopt = "menu,menuone,noinsert",
-        },
         enabled = function()
           if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then return false end
           return true
@@ -163,12 +191,11 @@ return {
           end,
         },
         mapping = mapping,
-        sources = cmp.config.sources {
-          { name = "nvim_lsp", priority = 1000 },
-          { name = "luasnip",  priority = 750 },
-          { name = "buffer",   priority = 500 },
-          { name = "path",     priority = 250 },
-        },
+        sources = cmp.config.sources(
+          { { name = "nvim_lsp" }, { name = "luasnip" } },
+          { { name = "buffer" }, { name = "path" } },
+          { { name = "lazydev", group_index = 0 } }
+        ),
       })
       cmp.setup.filetype({ "gitcommit", "octo" }, {
         mapping = mapping,
@@ -193,56 +220,39 @@ return {
       { "<C-[>", "<cmd>lua require'luasnip'.jump(-1)<cr>", mode = { "i", "s" }, silent = true, noremap = true },
     },
   },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   opts = {
+  --     suggestion = {
+  --       enabled = false,
+  --       auto_trigger = true,
+  --       debounce = 75,
+  --       keymap = {
+  --         accept = "j[",
+  --         accept_line = "jj[",
+  --         next = "<M-]>",
+  --         prev = "<M-[>",
+  --       },
+  --     },
+  --     copilot_node_command = 'node',
+  --     filetypes = {
+  --       yaml = true,
+  --       markdown = true,
+  --     },
+  --   },
+  -- },
   {
-    "zbirenbaum/copilot.lua",
-    opts = {
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        debounce = 75,
-        keymap = {
-          accept = "j[",
-          accept_line = "jj[",
-          next = "<M-]>",
-          prev = "<M-[>",
-        },
-      },
-      copilot_node_command = 'node',
-      filetypes = {
-        yaml = true,
-        markdown = true,
-      },
-    },
-  },
-  {
-    "simrat39/rust-tools.nvim",
+    "mrcjkb/rustaceanvim",
+    lazy = false,
     config = function()
-      require("rust-tools").setup({
+      vim.g.rustaceanvim = {
         server = {
           on_attach = on_attach,
-          capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+          default_settings = {
+            ["rust-analyzer"] = {},
+          },
         },
-      })
-    end,
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      require("null-ls").setup({
-        on_attach = function(client, bufnr)
-          if client.supports_method("textDocument/formatting") then
-            vim.keymap.set("n", "<Leader>f", function()
-              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
-          end
-
-          if client.supports_method("textDocument/rangeFormatting") then
-            vim.keymap.set("x", "<Leader>f", function()
-              vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
-          end
-        end,
-      })
+      }
     end,
   },
   {
@@ -252,12 +262,19 @@ return {
     end,
   },
   {
-    "jose-elias-alvarez/typescript.nvim",
-    opts = {
-      server = {
+    "pmizio/typescript-tools.nvim",
+    config = function()
+      require("typescript-tools").setup {
         on_attach = on_attach,
-      },
-    },
+      }
+    end,
   },
-  { "sheerun/vim-polyglot" },
+  {
+    "sheerun/vim-polyglot",
+    lazy = false,
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+  },
 }

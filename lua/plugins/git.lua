@@ -1,3 +1,5 @@
+vim.g.git_messenger_no_default_mappings = true
+
 return {
   {
     "airblade/vim-gitgutter",
@@ -13,7 +15,6 @@ return {
       { "<leader>gs",    ":Git<cr>",           silent = true, noremap = true },
       { "<leader>gc",    ":Gcommit<cr>",       silent = true, noremap = true },
       { "<leader>gm",    ":Git mergetool<cr>", silent = true, noremap = true },
-      { "<leader>gM",    ":Gmerge<cr>",        silent = true, noremap = true },
       { "<leader>gl",    ":0Gclog<cr>",        silent = true, noremap = true },
       { "<leader>gL",    ":Gclog %<cr>",       silent = true, noremap = true },
       { "<leader>gb",    ":Git blame<cr>",     silent = true, noremap = true },

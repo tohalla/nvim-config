@@ -13,6 +13,7 @@ return {
         dependencies = { "nvim-neotest/nvim-nio" },
         keys = {
           { "<leader>dui", "<cmd>lua require'dapui'.toggle()<CR>" },
+          { "<leader>dur", "<cmd>lua require'dapui'.open({reset=true})<CR>" },
         },
         config = function()
           local dap, dapui = require "dap", require "dapui"
@@ -31,27 +32,38 @@ return {
         handlers = {}
       })
       local dap = require("dap")
-      local chrome = {
-        type = "chrome",
-        request = "launch",
-        program = "${file}",
-        cwd = vim.fn.getcwd(),
-        sourceMaps = true,
-        protocol = "inspector",
-        port = 9222,
-        webRoot = "${workspaceFolder}"
+      local js = {
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch file",
+          program = "${file}",
+          cwd = "${workspaceFolder}",
+        },
+        {
+          type = "pwa-node",
+          request = "attach",
+          name = "Attach",
+          processId = require 'dap.utils'.pick_process,
+          cwd = "${workspaceFolder}",
+        }
       }
-      local node = {
-        name = 'Attach to process',
-        type = 'node2',
-        request = 'attach',
-        processId = require 'dap.utils'.pick_process,
+
+      dap.adapters['pwa-node'] = {
+        type = 'server',
+        command = 'node',
+        host = 'localhost',
+        port = '${port}',
+        executable = {
+          command = "node",
+          args = { "/Users/toukohallasmaa/.local/bin/js-debug/src/dapDebugServer.js", "${port}" },
+        }
       }
       for _, v in ipairs({ "typescriptreact", "javascriptreact", "svelte" }) do
-        dap.configurations[v] = { chrome, node }
+        dap.configurations[v] = js
       end
       for _, v in ipairs({ "typescript", "javascript" }) do
-        dap.configurations[v] = { chrome, node }
+        dap.configurations[v] = js
       end
     end,
     keys = {

@@ -1,6 +1,6 @@
 vim.g.maplocalleader = vim.g.mapleader
 
-vim.opt.completeopt = {"menuone", "noselect"}
+vim.opt.completeopt = { "menuone", "noselect" }
 vim.opt.expandtab = true
 vim.opt.linebreak = true
 vim.opt.shiftwidth = 2
@@ -32,7 +32,7 @@ vim.opt.scrolloff = 1
 vim.opt.shortmess:append { s = true, I = true }
 vim.opt.showmatch = true
 vim.opt.showmode = false
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "auto:1-9"
 vim.opt.smartcase = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -48,3 +48,9 @@ vim.opt.wildignorecase = true
 vim.opt.writebackup = false
 
 vim.opt.pumheight = 15
+
+vim.diagnostic.config({
+  jump = { float = { scope = "cursor" } },
+  virtual_text = { source = true },
+  signs = false,
+})

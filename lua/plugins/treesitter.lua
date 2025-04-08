@@ -19,6 +19,7 @@ return {
         ensure_installed = {
           "bash",
           "c",
+          "css",
           "go",
           "help",
           "html",
@@ -38,6 +39,7 @@ return {
           "typescript",
           "vim",
           "yaml",
+          "gitignore",
         },
         incremental_selection = {
           enable = true,
@@ -58,12 +60,45 @@ return {
     config = function()
       require("nvim-treesitter.configs").setup({
         textobjects = {
+          swap = {
+            enable = true,
+            swap_next = {
+              ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+              ["<leader>A"] = "@parameter.inner",
+            },
+          },
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              ["]m"] = "@function.outer",
+              ["]]"] = "@class.outer",
+              ["]s"] = { query = "@local.scope", query_group = "locals" },
+              ["]z"] = { query = "@fold", query_group = "folds" },
+            },
+            goto_next_end = {
+              ["]M"] = "@function.outer",
+              ["]["] = "@class.outer",
+            },
+            goto_previous_start = {
+              ["[m"] = "@function.outer",
+              ["[["] = "@class.outer",
+              ["[z"] = { query = "@fold", query_group = "folds" },
+              ["[s"] = { query = "@local.scope", query_group = "locals" },
+            },
+            goto_previous_end = {
+              ["[M"] = "@function.outer",
+              ["[]"] = "@class.outer",
+            },
+          },
           select = {
             enable = true,
             lookahead = true,
             keymaps = {
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
+              ["am"] = "@function.outer",
+              ["im"] = "@function.inner",
               ["ac"] = "@class.outer",
               ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
               ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
