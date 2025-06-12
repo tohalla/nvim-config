@@ -23,9 +23,9 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
+      -- Mason is pinned to version 1 for now: https://github.com/LazyVim/LazyVim/issues/6039
+      { "mason-org/mason.nvim",           version = "^1.0.0" },
+      { "mason-org/mason-lspconfig.nvim", version = "^1.0.0" },
       "ray-x/lsp_signature.nvim",
     },
     opts = {
@@ -67,7 +67,6 @@ return {
             "vue",
             "svelte",
           }
-
         },
         svelte = {},
         dockerls = {},
