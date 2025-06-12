@@ -15,16 +15,18 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable "make" == 1, build = "make" },
+      { "nvim-telescope/telescope-fzf-native.nvim",     enabled = vim.fn.executable "make" == 1, build = "make" },
+      { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.0.0" },
     },
     keys = {
       { "<leader>l", "<cmd>Telescope buffers<cr>",              silent = true },
       { "<leader>p", "<cmd>Telescope find_files<cr>",           silent = true },
       { "<leader>s", "<cmd>Telescope lsp_document_symbols<cr>", silent = true },
-      { "",         "<cmd>Telescope live_grep<cr>",            silent = true },
+      { "",         "<cmd>Telescope live_grep_args<cr>",       silent = true },
     },
     config = function()
       local telescope = require("telescope")
+      local lga_actions = require("telescope-live-grep-args.actions")
       telescope.setup(
         {
           defaults = {
@@ -33,6 +35,7 @@ return {
               i = {
                 ["<C-k>"] = "move_selection_previous",
                 ["<C-j>"] = "move_selection_next",
+                ["<C-l>"] = lga_actions.quote_prompt(),
               },
               n = {
                 ["<C-c>"] = "close"
@@ -50,6 +53,7 @@ return {
         }
       )
       telescope.load_extension("fzf")
+      telescope.load_extension("live_grep_args")
     end,
   },
   {
