@@ -63,7 +63,10 @@ return {
     },
     ft = "qf",
     opts = {
-      auto_resize_height = true
+      auto_resize_height = true,
+      preview = {
+        show_scroll_bar = false
+      }
     },
   },
   {
