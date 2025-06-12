@@ -27,4 +27,5 @@ vim.keymap.set("n", "g#", "g#zz", { noremap = true })
 -- yanking
 vim.keymap.set("n", "<leader>y", '"*y', { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>Y", '"*Y', { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>.", '<cmd>let @+ = expand("%:.")<cr>', { silent = true, noremap = true })
 vim.keymap.set("n", "Y", "y$", { noremap = true })
