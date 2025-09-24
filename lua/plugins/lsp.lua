@@ -13,28 +13,27 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>Q", "<cmd>lua vim.lsp.diagnostic.set_qflist()<CR>", opts)
   vim.keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 
-  if client.server_capabilities.signatureHelpProvider then
+  if client.server_capabilities and client.server_capabilities.signatureHelpProvider then
     require("lsp_signature").on_attach({}, bufnr)
   end
 end
 
 return {
   {
-    "neovim/nvim-lspconfig",
+    "mason-org/mason-lspconfig.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      -- Mason is pinned to version 1 for now: https://github.com/LazyVim/LazyVim/issues/6039
-      { "mason-org/mason.nvim",           version = "^1.0.0" },
-      { "mason-org/mason-lspconfig.nvim", version = "^1.0.0" },
+      "mason-org/mason.nvim",
       "ray-x/lsp_signature.nvim",
     },
-    opts = {
-      servers = {
+    config = function()
+      local servers = {
         lua_ls = {
           settings = {
             Lua = {
               workspace = { checkThirdParty = false },
               completion = { callSnippet = "Replace" },
+              diagnostics = { globals = { "vim" } },
             },
           },
         },
@@ -95,53 +94,30 @@ return {
             "astro",
           },
         },
-      },
-      setup = {
-        rust_analyzer = function()
-        end,
-        ["*"] = function(server, opts)
-          require("lspconfig")[server].setup(
-            vim.tbl_deep_extend("force", {
-              flags = {
-                allow_incremental_sync = false,
-                debounce_text_changes = 250,
-              },
-              on_attach = on_attach,
-              capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-            }, opts or {})
-          )
-        end,
-      },
-    },
-    config = function(_, opts)
-      local function setup(server)
-        if opts.setup[server] then
-          opts.setup[server](server, opts.servers[server])
-          return
-        end
-        opts.setup["*"](server, opts.servers[server])
-      end
-
-      local all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
-      local ensure_installed = {}
-      for server, server_opts in pairs(opts.servers) do
-        if server_opts then
-          server_opts = server_opts == true and {} or server_opts
-          if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-            setup(server)
-          else
-            ensure_installed[#ensure_installed + 1] = server
-          end
-        end
-      end
-      require("mason").setup()
-      local mason_lspconfig = require("mason-lspconfig")
-      mason_lspconfig.setup({
-        automatic_installation = true,
-        ensure_installed = ensure_installed,
+      }
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = on_attach
       })
-      mason_lspconfig.setup_handlers({ setup })
-    end,
+      local capabilities = vim.tbl_deep_extend(
+        'force',
+        vim.lsp.protocol.make_client_capabilities(),
+        require('cmp_nvim_lsp').default_capabilities()
+      )
+      for server, opts in pairs(servers) do
+        vim.lsp.config(server, vim.tbl_deep_extend("force", {
+          flags = {
+            allow_incremental_sync = false,
+            debounce_text_changes = 250,
+          },
+          capabilities = capabilities
+        }, opts or {}))
+        require("mason").setup()
+        require('mason-lspconfig').setup({
+          ensure_installed = vim.tbl_keys(servers),
+          automatic_enable = true,
+        })
+      end
+    end
   },
   {
     "hrsh7th/nvim-cmp",
@@ -255,16 +231,16 @@ return {
     end,
   },
   {
-    "MunifTanjim/prettier.nvim",
-    config = function()
-      require("prettier").setup()
-    end,
-  },
-  {
     "pmizio/typescript-tools.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
     config = function()
       require("typescript-tools").setup {
-        on_attach = on_attach,
+        on_attach = function(client, bufnr)
+          client.server_capabilities.documentFormattingProvider = false
+          on_attach(client, bufnr)
+        end
       }
     end,
   },
