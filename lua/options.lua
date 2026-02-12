@@ -46,6 +46,7 @@ vim.opt.updatetime = 100
 vim.opt.visualbell = false
 vim.opt.wildignorecase = true
 vim.opt.writebackup = false
+vim.opt.winborder = "rounded"
 
 vim.opt.pumheight = 15
 
