@@ -40,7 +40,19 @@ return {
         pyright = {},
         gopls = {},
         jsonls = {},
-        golangci_lint_ls = {},
+        golangci_lint_ls = {
+          init_options = {
+            command = {
+              "golangci-lint",
+              "run",
+              "--output.json.path",
+              "stdout",
+              "--fix=false",
+              "--show-stats=false",
+              "--issues-exit-code=1",
+            },
+          },
+        },
         sqlls = {},
         cssls = {},
         tailwindcss = {
