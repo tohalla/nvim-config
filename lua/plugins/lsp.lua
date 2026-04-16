@@ -107,28 +107,28 @@ return {
           },
         },
       }
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = on_attach
-      })
       local capabilities = vim.tbl_deep_extend(
         'force',
         vim.lsp.protocol.make_client_capabilities(),
         require('cmp_nvim_lsp').default_capabilities()
       )
+      require("mason").setup()
+      require("mason-lspconfig").setup({
+        ensure_installed = vim.tbl_keys(servers),
+      })
+
       for server, opts in pairs(servers) do
         vim.lsp.config(server, vim.tbl_deep_extend("force", {
           flags = {
-            allow_incremental_sync = false,
+            allow_incremental_sync = true,
             debounce_text_changes = 250,
           },
           capabilities = capabilities
         }, opts or {}))
-        require("mason").setup()
-        require('mason-lspconfig').setup({
-          ensure_installed = vim.tbl_keys(servers),
-          automatic_enable = true,
-        })
       end
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = on_attach
+      })
     end
   },
   {
