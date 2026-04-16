@@ -257,10 +257,6 @@ return {
     end,
   },
   {
-    "sheerun/vim-polyglot",
-    lazy = false,
-  },
-  {
     "folke/lazydev.nvim",
     ft = "lua",
   },
