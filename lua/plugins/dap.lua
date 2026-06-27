@@ -28,48 +28,32 @@ return {
       require('dap-go').setup()
       require("mason-nvim-dap").setup({
         automatic_installation = true,
-        ensure_installed = { "chrome", "node2" },
+        ensure_installed = { "js-debug-adapter" },
         handlers = {}
       })
       local dap = require("dap")
-      local js = {
-        {
-          type = "pwa-node",
-          request = "launch",
-          name = "Launch file",
-          program = "${file}",
-          cwd = "${workspaceFolder}",
-        },
-        {
-          type = "pwa-node",
-          request = "attach",
-          name = "Attach",
-          processId = require 'dap.utils'.pick_process,
-          cwd = "${workspaceFolder}",
-        }
-      }
 
-      dap.adapters['pwa-node'] = {
-        type = 'server',
-        command = 'node',
-        host = 'localhost',
-        port = '${port}',
-        executable = {
-          command = "node",
-          args = { "/Users/toukohallasmaa/.local/bin/js-debug/src/dapDebugServer.js", "${port}" },
+      local js_debug_path = vim.fn.stdpath("data")
+        .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js"
+
+      for _, adapter in ipairs({ "pwa-node", "pwa-chrome" }) do
+        dap.adapters[adapter] = {
+          type = 'server',
+          host = 'localhost',
+          port = '${port}',
+          executable = {
+            command = "node",
+            args = { js_debug_path, "${port}" },
+          }
         }
-      }
-      for _, v in ipairs({ "typescriptreact", "javascriptreact", "svelte" }) do
-        dap.configurations[v] = js
       end
-      for _, v in ipairs({ "typescript", "javascript" }) do
-        dap.configurations[v] = js
-      end
+
+      -- Per-project configs live in <project>/.vscode/launch.json.
+      -- nvim-dap reads them automatically on-demand at
     end,
     keys = {
       { "<leader>D",     "<cmd>lua require'dap'.continue()<CR>" },
       { "<leader>dq",    "<cmd>lua require'dap'.terminate()<CR>" },
-      { "<leader>dn",    "<cmd>lua require'dap'.next()<CR>" },
       { "<leader>d<bs>", "<cmd>lua require'dap'.clear_breakpoints()<CR>" },
       { "<C-n>",         "<cmd>lua require'dap'.step_over()<CR>" },
       { "<leader>dd",    "<cmd>lua require'dap'.step_into()<CR>" },
