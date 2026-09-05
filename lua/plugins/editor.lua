@@ -41,17 +41,25 @@ return {
                 ["<C-c>"] = "close"
               },
             },
-          },
-          pickers = {
-            find_files = {
-              find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
-            },
-            live_grep = {
-              additional_args = { "--hidden", "--glob", "!.git/*" },
+            n = {
+              ["<C-c>"] = "close",
             },
           },
-        }
-      )
+        },
+        pickers = {
+          find_files = {
+            find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+          },
+        },
+        extensions = {
+          live_grep_args = {
+            vimgrep_arguments = vim.list_extend(
+              vim.deepcopy(require("telescope.config").values.vimgrep_arguments),
+              { "--hidden", "--glob", "!.git/*" }
+            ),
+          },
+        },
+      })
       telescope.load_extension("fzf")
       telescope.load_extension("live_grep_args")
     end,
