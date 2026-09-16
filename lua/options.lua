@@ -14,7 +14,7 @@ vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.diffopt:append { "vertical" }
 vim.opt.errorbells = false
 vim.opt.foldenable = false
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldmethod = "expr"
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
