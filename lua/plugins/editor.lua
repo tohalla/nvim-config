@@ -1,12 +1,5 @@
 return {
   {
-    "machakann/vim-highlightedyank",
-    config = function()
-      vim.g.highlightedyank_highlight_duration = 200
-      vim.g.highlightedyank_highlight_delay = 0
-    end,
-  },
-  {
     "mbbill/undotree",
     keys = {
       { "<leader>u", "<cmd>UndotreeToggle<cr>", silent = true, noremap = true },
@@ -185,7 +178,6 @@ return {
   "tpope/vim-abolish",
   "ggandor/lightspeed.nvim",
   "tpope/vim-abolish",
-  "tpope/vim-commentary",
   "tpope/vim-repeat",
   "tpope/vim-surround",
   "tpope/vim-unimpaired",
@@ -196,7 +188,6 @@ return {
       "nvim-neotest/neotest-go",
       "marilari88/neotest-vitest",
       "rouge8/neotest-rust",
-      "antoinemadec/FixCursorHold.nvim",
     },
     keys = {
       { "]F",         "<cmd>lua require('neotest').jump.next({ status = 'failed' })<CR>", silent = true, noremap = true },

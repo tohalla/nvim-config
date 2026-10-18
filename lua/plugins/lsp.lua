@@ -33,7 +33,6 @@ return {
             Lua = {
               workspace = { checkThirdParty = false },
               completion = { callSnippet = "Replace" },
-              diagnostics = { globals = { "vim" } },
             },
           },
         },
@@ -260,5 +259,6 @@ return {
   {
     "folke/lazydev.nvim",
     ft = "lua",
+    opts = {},
   },
 }

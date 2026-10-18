@@ -33,3 +33,11 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true, nowait = true })
   end,
 })
+
+vim.api.nvim_create_augroup("yank_highlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = "yank_highlight",
+  callback = function()
+    vim.hl.on_yank({ higroup = "YankHighlight", timeout = 200 })
+  end,
+})
