@@ -4,10 +4,10 @@ return {
     dependencies = {
       {
         "jay-babu/mason-nvim-dap.nvim",
-        "leoluz/nvim-dap-go",
         dependencies = { "nvim-dap" },
         cmd = { "DapInstall", "DapUninstall" },
       },
+      "leoluz/nvim-dap-go",
       {
         "rcarriga/nvim-dap-ui",
         dependencies = { "nvim-neotest/nvim-nio" },
