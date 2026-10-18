@@ -72,10 +72,33 @@ return {
     ft = "qf",
     opts = {
       auto_resize_height = true,
-      preview = {
-        show_scroll_bar = false
-      }
+      preview = { show_scroll_bar = false },
     },
+    config = function(_, opts)
+      require('bqf').setup(opts)
+      -- nvim 0.12: H/M/L inside nvim_win_call no longer set the `` mark, causing E20
+      local utils = require('bqf.utils')
+      local api = vim.api
+      utils.zz = function()
+        local lnum1, lcount = api.nvim_win_get_cursor(0)[1], api.nvim_buf_line_count(0)
+        local zb = 'keepj norm! %dzb'
+        if lnum1 == lcount then
+          vim.cmd(zb:format(lnum1))
+          return
+        end
+        vim.cmd('norm! zvzz')
+        lnum1 = api.nvim_win_get_cursor(0)[1]
+        local saved_pos = api.nvim_win_get_cursor(0)
+        vim.cmd('norm! L')
+        local lnum2 = api.nvim_win_get_cursor(0)[1]
+        if lnum2 + vim.fn.getwinvar(0, '&scrolloff') >= lcount then
+          vim.cmd(zb:format(lnum2))
+        end
+        if lnum1 ~= lnum2 then
+          api.nvim_win_set_cursor(0, saved_pos)
+        end
+      end
+    end,
   },
   {
     "nvim-lualine/lualine.nvim",
