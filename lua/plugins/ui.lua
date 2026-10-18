@@ -27,6 +27,8 @@ return {
           vim.api.nvim_set_hl(0, "HintFloat", { bg = "#000000" })
           vim.api.nvim_set_hl(0, "WarningFloat", { bg = "#000000" })
           vim.api.nvim_set_hl(0, "YankHighlight", { reverse = true })
+          vim.api.nvim_set_hl(0, "CursorLine", { fg = "NONE", bg = "gray40" })
+          vim.api.nvim_set_hl(0, "FloatBorder", { bg = "NONE" })
         end
       })
 

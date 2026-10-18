@@ -28,7 +28,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 for _, src in ipairs {
-  "highlights",
   "snippets",
 } do
   load(src)
