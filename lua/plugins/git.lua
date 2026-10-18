@@ -13,7 +13,7 @@ return {
     lazy = false,
     keys = {
       { "<leader>gs",    ":Git<cr>",           silent = true, noremap = true },
-      { "<leader>gc",    ":Gcommit<cr>",       silent = true, noremap = true },
+      { "<leader>gc",    ":Git commit<cr>",    silent = true, noremap = true },
       { "<leader>gm",    ":Git mergetool<cr>", silent = true, noremap = true },
       { "<leader>gl",    ":0Gclog<cr>",        silent = true, noremap = true },
       { "<leader>gL",    ":Gclog %<cr>",       silent = true, noremap = true },
