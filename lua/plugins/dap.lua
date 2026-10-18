@@ -49,7 +49,7 @@ return {
       end
 
       -- Per-project configs live in <project>/.vscode/launch.json.
-      -- nvim-dap reads them automatically on-demand at
+      -- nvim-dap reads them each time continue() asks which configuration to run.
     end,
     keys = {
       { "<leader>D",     "<cmd>lua require'dap'.continue()<CR>" },
