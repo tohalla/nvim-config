@@ -122,13 +122,6 @@ return {
     end,
   },
   {
-    "preservim/vim-markdown",
-    dependencies = { "godlygeek/tabular" },
-    config = function()
-      vim.g.vim_markdown_folding_disabled = 1
-    end,
-  },
-  {
     "iamcco/markdown-preview.nvim",
     build = "cd app && yarn install",
   },
