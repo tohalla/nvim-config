@@ -88,7 +88,6 @@ return {
           },
         },
         stylelint_lsp = {},
-        rust_analyzer = {},
         eslint = {
           settings = {
             format = false,
