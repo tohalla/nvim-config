@@ -1,5 +1,5 @@
 local on_attach = function(client, bufnr)
-  local opts = { noremap = true, silent = true, buffer = bufnr }
+  local opts = { silent = true, buffer = bufnr }
   vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -210,8 +210,8 @@ return {
       require("luasnip.loaders.from_lua").lazy_load()
     end,
     keys = {
-      { "<C-]>", "<cmd>lua require'luasnip'.jump(1)<cr>",  mode = { "i", "s" }, silent = true, noremap = true },
-      { "<C-[>", "<cmd>lua require'luasnip'.jump(-1)<cr>", mode = { "i", "s" }, silent = true, noremap = true },
+      { "<C-]>", "<cmd>lua require'luasnip'.jump(1)<cr>",  mode = { "i", "s" }, silent = true },
+      { "<C-[>", "<cmd>lua require'luasnip'.jump(-1)<cr>", mode = { "i", "s" }, silent = true },
     },
   },
   -- {

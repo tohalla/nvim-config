@@ -2,7 +2,7 @@ return {
   {
     "mbbill/undotree",
     keys = {
-      { "<leader>u", "<cmd>UndotreeToggle<cr>", silent = true, noremap = true },
+      { "<leader>u", "<cmd>UndotreeToggle<cr>", silent = true },
     },
   },
   {
@@ -192,12 +192,12 @@ return {
       "rouge8/neotest-rust",
     },
     keys = {
-      { "]F",         "<cmd>lua require('neotest').jump.next({ status = 'failed' })<CR>", silent = true, noremap = true },
-      { "[F",         "<cmd>lua require('neotest').jump.prev({ status = 'failed' })<CR>", silent = true, noremap = true },
-      { "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",      silent = true, noremap = true },
-      { "<leader>tt", "<cmd>lua require('neotest').run.run()<CR>",                        silent = true, noremap = true },
-      { "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>",                 silent = true, noremap = true },
-      { "<leader>to", "<cmd>lua require('neotest').output.open({ enter = true })<CR>",    silent = true, noremap = true },
+      { "]F",         "<cmd>lua require('neotest').jump.next({ status = 'failed' })<CR>", silent = true },
+      { "[F",         "<cmd>lua require('neotest').jump.prev({ status = 'failed' })<CR>", silent = true },
+      { "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",      silent = true },
+      { "<leader>tt", "<cmd>lua require('neotest').run.run()<CR>",                        silent = true },
+      { "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>",                 silent = true },
+      { "<leader>to", "<cmd>lua require('neotest').output.open({ enter = true })<CR>",    silent = true },
     },
     config = function()
       require("neotest").setup({
@@ -220,7 +220,7 @@ return {
   },
   {
     "Wansmer/treesj",
-    keys = { { "<leader>j", "<cmd>TSJToggle<CR>", silent = true, noremap = true }, },
+    keys = { { "<leader>j", "<cmd>TSJToggle<CR>", silent = true }, },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
       require('treesj').setup({
