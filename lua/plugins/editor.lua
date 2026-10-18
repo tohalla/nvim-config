@@ -174,9 +174,16 @@ return {
       { "<leader>9", "<cmd>lua require('harpoon.ui').nav_file(9)<CR>" },
     },
   },
-  "ggandor/lightspeed.nvim",
+  {
+    url = "https://codeberg.org/andyg/leap.nvim",
+    dependencies = { "ggandor/flit.nvim" },
+    config = function()
+      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
+      vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
+      require("flit").setup()
+    end,
+  },
   "tpope/vim-abolish",
-  "ggandor/lightspeed.nvim",
   "tpope/vim-abolish",
   "tpope/vim-repeat",
   "tpope/vim-surround",

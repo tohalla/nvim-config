@@ -18,7 +18,6 @@ return {
           vim.api.nvim_set_hl(0, "IndentGuidesEven", { bg = "#1B1D1E", fg = "#1B1D1E" })
           vim.api.nvim_set_hl(0, "Pmenu", { fg = "#EBDBB2", bg = "#000000" })
           vim.api.nvim_set_hl(0, "Visual", { bg = "#665544" })
-          vim.api.nvim_set_hl(0, "LightspeedPendingOpArea", { bg = "#665544" })
           vim.api.nvim_set_hl(0, "NormalFloat", { fg = "#EBDBB2", bg = "#000000" })
           vim.api.nvim_set_hl(0, "VirtualTextError", { fg = "#F2594B" })
           vim.api.nvim_set_hl(0, "VirtualTextWarning", { fg = "#E9B143" })
