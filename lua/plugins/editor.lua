@@ -215,15 +215,13 @@ return {
     end
   },
   {
-    "simrat39/symbols-outline.nvim",
+    "hedyhli/outline.nvim",
     keys = {
-      { "<leader>`", "<cmd>SymbolsOutline<CR>" },
+      { "<leader>`", "<cmd>Outline<CR>" },
     },
-    config = function()
-      require("symbols-outline").setup({
-        autofold_depth = 1,
-      })
-    end,
+    opts = {
+      symbol_folding = { autofold_depth = 1 },
+    },
   },
   {
     "Wansmer/treesj",
