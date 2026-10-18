@@ -8,7 +8,7 @@ vim.api.nvim_create_augroup("bw_create_dir", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   group = "bw_create_dir",
   callback = function(event)
-    local file = vim.loop.fs_realpath(event.match) or event.match
+    local file = vim.uv.fs_realpath(event.match) or event.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
