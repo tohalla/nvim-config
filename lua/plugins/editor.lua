@@ -20,19 +20,14 @@ return {
     config = function()
       local telescope = require("telescope")
       local lga_actions = require("telescope-live-grep-args.actions")
-      telescope.setup(
-        {
-          defaults = {
-            layout_strategy = "vertical",
-            mappings = {
-              i = {
-                ["<C-k>"] = "move_selection_previous",
-                ["<C-j>"] = "move_selection_next",
-                ["<C-l>"] = lga_actions.quote_prompt(),
-              },
-              n = {
-                ["<C-c>"] = "close"
-              },
+      telescope.setup({
+        defaults = {
+          layout_strategy = "vertical",
+          mappings = {
+            i = {
+              ["<C-k>"] = "move_selection_previous",
+              ["<C-j>"] = "move_selection_next",
+              ["<C-l>"] = lga_actions.quote_prompt(),
             },
             n = {
               ["<C-c>"] = "close",
