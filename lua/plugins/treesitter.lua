@@ -17,14 +17,10 @@ return {
 
       vim.api.nvim_create_autocmd("FileType", {
         callback = function()
-          -- treesitter.start() is a no-op if no parser is available
-          pcall(vim.treesitter.start)
-        end,
-      })
-
-      vim.api.nvim_create_autocmd("FileType", {
-        callback = function()
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          -- treesitter.start() errors if no parser is available, keep the regular indent then
+          if pcall(vim.treesitter.start) then
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
         end,
       })
     end,
