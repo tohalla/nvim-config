@@ -199,8 +199,8 @@ return {
       "antoinemadec/FixCursorHold.nvim",
     },
     keys = {
-      { "]s",         "<cmd>lua require('neotest').jump.next({ status = 'failed' })<CR>", silent = true, noremap = true },
-      { "[s",         "<cmd>lua require('neotest').jump.prev({ status = 'failed' })<CR>", silent = true, noremap = true },
+      { "]F",         "<cmd>lua require('neotest').jump.next({ status = 'failed' })<CR>", silent = true, noremap = true },
+      { "[F",         "<cmd>lua require('neotest').jump.prev({ status = 'failed' })<CR>", silent = true, noremap = true },
       { "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",      silent = true, noremap = true },
       { "<leader>tt", "<cmd>lua require('neotest').run.run()<CR>",                        silent = true, noremap = true },
       { "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>",                 silent = true, noremap = true },
