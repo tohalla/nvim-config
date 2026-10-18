@@ -184,7 +184,6 @@ return {
     end,
   },
   "tpope/vim-abolish",
-  "tpope/vim-abolish",
   "tpope/vim-repeat",
   "tpope/vim-surround",
   "tpope/vim-unimpaired",
