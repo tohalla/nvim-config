@@ -9,7 +9,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float(0, {scope='line'})<CR>", opts)
+  vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float({ scope = 'line' })<CR>", opts)
   vim.keymap.set("n", "<leader>Q", "<cmd>lua vim.diagnostic.setqflist()<CR>", opts)
 
   if client.server_capabilities and client.server_capabilities.signatureHelpProvider then
