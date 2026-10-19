@@ -61,7 +61,6 @@ return {
             "gohtml",
             "gohtmltmpl",
             "html",
-            "markdown",
             "mdx",
             "mustache",
             "css",
