@@ -176,7 +176,9 @@ return {
     config = function()
       vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
       vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
-      require("flit").setup()
+      require("leap").opts.vim_opts["go.ignorecase"] = false
+      -- flit defaults to the removed case_sensitive = true; override it
+      require("flit").setup({ opts = { case_sensitive = false } })
     end,
   },
   "tpope/vim-abolish",
