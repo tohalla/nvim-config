@@ -1,5 +1,8 @@
 vim.g.mapleader = " "
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 local function load(src)
   local status_ok, fault = pcall(require, src)
   if not status_ok then vim.api.nvim_err_writeln("Failed loading " .. src .. "\n\n" .. fault) end
